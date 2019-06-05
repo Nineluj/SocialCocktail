@@ -29,8 +29,6 @@ class CocktailInfoModal extends React.Component {
         let ingredientArr = [];
         for (let i = 1; i < 15; i++) {
             let ingredient = this.state.drink[`strIngredient${i}`];
-            // debugger;
-            debugger;
             if (ingredient !== "") {
                 ingredientArr.push(ingredient);
             }
