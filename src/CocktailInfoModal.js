@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import './CocktailInfoModal.scss';
 
 class CocktailInfoModal extends React.Component {
     constructor(props, context) {
@@ -40,7 +41,6 @@ class CocktailInfoModal extends React.Component {
     };
 
     componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
         if (this.props.id !== prevProps.id) {
             this.loadData(this.props.id);
             this.collectIngredients();
@@ -59,8 +59,6 @@ class CocktailInfoModal extends React.Component {
     render() {
         let { drink } = this.state;
 
-
-
         return (
             <Modal show={true} onHide={this.processClose}>
 
@@ -76,12 +74,9 @@ class CocktailInfoModal extends React.Component {
                     Instructions: <i>{drink.strInstructions}</i>
                 </Modal.Body>
                 <Modal.Footer>
-                    {/*<Button variant="secondary" onClick={this.processClose}>*/}
-                        Cancel
-                    {/*</Button>*/}
-                    {/*<Button variant="primary" onClick={this.onSubmit}>*/}
-                    {/*    See More*/}
-                    {/*</Button>*/}
+                    <Button variant="secondary" onClick={this.processClose} className="cocktail-info-button">
+                        Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
         );
