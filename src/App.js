@@ -2,6 +2,7 @@ import React from 'react';
 import './App.scss';
 import {Container, Row, Col, Form} from 'react-bootstrap';
 import CocktailItem from './CocktailItem';
+import CocktailInfoModal from "./CocktailInfoModal";
 
 class App extends React.Component {
     constructor(props) {
@@ -9,7 +10,9 @@ class App extends React.Component {
 
         this.state = {
             cocktailSearchText: "",
-            shownCocktails: []
+            shownCocktails: [],
+            modalShown: false,
+            modalCocktailId: -1
         }
     }
 
@@ -35,11 +38,27 @@ class App extends React.Component {
         })
     };
 
+    showInformation = (id) => {
+        this.setState({
+            modalShown: true,
+            modalCocktailId: id
+        });
+    };
+
+    hideModal = () => {
+        this.setState({
+            modalShown: false,
+            modalCocktailId: -1
+        });
+    };
+
+
     render() {
-        let { cocktailSearchText, shownCocktails } = this.state;
+        let { cocktailSearchText, shownCocktails, modalShown } = this.state;
 
         return (
             <div className="demo">
+                { modalShown && <CocktailInfoModal hideModal={this.hideModal} id={this.state.modalCocktailId}/> }
                 <Container className="demo-main-div">
                     <Row>
                         <Col xs={12}>
@@ -62,7 +81,8 @@ class App extends React.Component {
                     </Row>
                     <Row>
                         <Col xs={12} className="demo-results">
-                            {shownCocktails !== null && shownCocktails.map(cocktail => <CocktailItem key={cocktail.idDrink} data={cocktail}/>)}
+                            {shownCocktails !== null && shownCocktails.map(cocktail =>
+                                <CocktailItem onSelect={this.showInformation} key={cocktail.idDrink} data={cocktail}/>)}
                             {shownCocktails === null && <h5>Womp Womp. No matches found.</h5>}
                         </Col>
                     </Row>

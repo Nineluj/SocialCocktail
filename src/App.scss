@@ -3,7 +3,7 @@
 .demo {
   background: $dark-grey;
   height:100vh;
-  padding-top: 10px;
+  padding: 10px 0;
 
   .demo-main-div {
     background: $light-blue;
@@ -21,7 +21,8 @@
     }
 
     .demo-results {
-      overflow-y:auto
+      overflow-y: scroll;
+      height: 650px;
     }
   }
 }

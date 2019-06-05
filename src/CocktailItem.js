@@ -7,13 +7,11 @@ const CocktailItem = (props) => (
         <Card.Img variant="top" src={props.data.strDrinkThumb} />
         <Card.Body>
             <Card.Title>{props.data.strDrink}</Card.Title>
-            <Card.Text>
                 <ul>
                     <li>Category: {props.data.strCategory}</li>
                     <li>Glass Type: {props.data.strGlass}</li>
                 </ul>
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
+            <Button variant="primary" onClick={() => props.onSelect(props.data.idDrink)}>See More</Button>
         </Card.Body>
     </Card>
 );
