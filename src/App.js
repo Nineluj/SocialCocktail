@@ -3,6 +3,7 @@ import './App.scss';
 import {Container, Row, Col, Form} from 'react-bootstrap';
 import CocktailItem from './CocktailItem';
 import CocktailInfoModal from "./CocktailInfoModal";
+import Image from "react-bootstrap/Image";
 
 class App extends React.Component {
     constructor(props) {
@@ -62,6 +63,7 @@ class App extends React.Component {
                 <Container className="demo-main-div">
                     <Row>
                         <Col xs={12}>
+                            <Image className="demo-main-image" src={require("./SocialCocktail.svg")}/>
                             <h2 className="demo-main-title">SocialCocktail DEMO</h2>
                         </Col>
                     </Row>
