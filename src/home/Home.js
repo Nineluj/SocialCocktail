@@ -8,14 +8,11 @@ class Home extends React.Component {
         this.state = {
             user: {}
         }
-        this.userService.getUsername().then(user => this.setState({
-            user: user
-        }))
     }
 
     render() {
         console.log(this.state.user.username)
-        return (<h1>home works! {this.state.user.username}</h1>)
+        return (<h1>home works!</h1>)
     }
 }
 
