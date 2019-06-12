@@ -1,12 +1,10 @@
 import React from 'react';
 import './App.scss';
-import {Container, Row, Col, Form} from 'react-bootstrap';
-import CocktailItem from './CocktailItem';
-import CocktailInfoModal from "./CocktailInfoModal";
-import Image from "react-bootstrap/Image";
 import Login from './login/Login';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import Register from './register/Register';
+import Profile from './profile/Profile';
+import Search from './search/Search';
 
 class App extends React.Component {
     constructor(props) {
@@ -58,48 +56,12 @@ class App extends React.Component {
 
 
     render() {
-        let { cocktailSearchText, shownCocktails, modalShown } = this.state;
-
         return (
             <Router>
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/register" component={Register}/>
-                <Route exact path="/" render={() =>
-                    <div className="demo">
-                        { modalShown && <CocktailInfoModal hideModal={this.hideModal} id={this.state.modalCocktailId}/> }
-                        <Container className="demo-main-div">
-                            <Row>
-                                <Col xs={12}>
-
-                                    <Image className="demo-main-image" src={require("./SocialCocktail.svg")}/>
-                                    <h2 className="demo-main-title">SocialCocktail DEMO</h2>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs={12}>
-                                    <Link to="/login">Login</Link>
-                                    <Link to="/register">Register</Link>
-                                    <Form>
-                                        <Form.Group controlId="exampleForm.ControlInput1">
-                                            <Form.Label>Lookup your favorite cocktail</Form.Label>
-                                            <Form.Control type="text"
-                                                        placeholder="Margarita"
-                                                        value={cocktailSearchText}
-                                                        onChange={this.updateSearch}
-                                            />
-                                        </Form.Group>
-                                    </Form>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col xs={12} className="demo-results">
-                                    {shownCocktails !== null && shownCocktails.map(cocktail =>
-                                        <CocktailItem onSelect={this.showInformation} key={cocktail.idDrink} data={cocktail}/>)}
-                                    {shownCocktails === null && <h5>Womp Womp. No matches found.</h5>}
-                                </Col>
-                            </Row>
-                        </Container>
-                    </div>}/>
+                <Route exact path="/profile" component={Profile}/>
+                <Route exact path="/search" component={Search}/>
             </Router>
         );
     }

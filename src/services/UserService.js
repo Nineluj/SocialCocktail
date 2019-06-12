@@ -6,6 +6,7 @@ export default class UserService {
 
         this.authenticateUserUrl = '//' + this.pathHost + '/api/users/login'
         this.registerUserUrl = '//' + this.pathHost + '/api/users/register'
+        this.getUserByIdUrl = '//' + this.pathHost + 'api/users/{uid}'
     }
 
     static myInstance = null;    
