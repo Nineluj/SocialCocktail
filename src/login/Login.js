@@ -1,5 +1,6 @@
 import React from 'react'
 import UserService from '../services/UserService'
+import { Redirect } from 'react-router'
 
 
 
@@ -9,7 +10,8 @@ class Login extends React.Component {
         this.userService = UserService.getInstance()
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            loggedIn: 401
         }
     }
 
@@ -26,6 +28,11 @@ class Login extends React.Component {
     }
 
     render() {
+        if (this.state.loggedIn === 200) {
+            return (
+                <Redirect to='/'/>
+            )
+        }
         return (
             <div class="container">
                 <h1>Sign In</h1>
@@ -58,10 +65,17 @@ class Login extends React.Component {
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
                             <button class="btn btn-primary btn-block"
-                                    onClick={() => this.userService.authenticateUser({
-                                        username: this.state.username,
-                                        password: this.state.password
-                                        })}>Sign in</button>
+                                    onClick={() => {
+                                            this.userService.authenticateUser({
+                                            username: this.state.username,
+                                            password: this.state.password
+                                            })
+                                            .then(response => {
+                                                console.log(response)
+                                                this.setState({
+                                                loggedIn: response.status
+                                            })})
+                                        }}>Sign in</button>
                             <div class="row">
                                 <div class="col-6">
                                     <a href="#">Forgot Password?</a>

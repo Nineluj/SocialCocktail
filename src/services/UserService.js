@@ -6,7 +6,6 @@ export default class UserService {
 
         this.authenticateUserUrl = '//' + this.pathHost + '/api/users/login'
         this.registerUserUrl = '//' + this.pathHost + '/api/users/register'
-        this.getUserByIdUrl = '//' + this.pathHost + 'api/users/{uid}'
     }
 
     static myInstance = null;    
@@ -19,10 +18,10 @@ export default class UserService {
 
     authenticateUser = (user) => {
         user.password = sha256(user.password).toString()
-        console.log(user)
         return fetch(this.authenticateUserUrl, {
             method: 'POST',
             body: JSON.stringify(user),
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json'
             }
@@ -34,6 +33,7 @@ export default class UserService {
         return fetch(this.registerUserUrl, {
             method: 'POST',
             body: JSON.stringify(user),
+            credentials: 'include',
             headers: {
                 'content-type': 'application/json'
             }
