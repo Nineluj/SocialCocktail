@@ -13,13 +13,20 @@ class Home extends React.Component {
             <div>
                 <h1>Welcome to your Homepage, {this.props.user.username !== undefined ? this.props.user.username : 'Anonymous User'}</h1>
                 {this.props.user.id === undefined &&
-                <Link to="/login">Login</Link>}
+                <h2><Link to="/login">Login</Link></h2>}
+
                 {this.props.user.id !== undefined &&
-                <a href='#' onClick={() => 
-                    this.userService.logoutUser()
-                    .then(response => response.status === 200 ? this.props.retrieveLoggedInUser : alert('Could not log out.'))}>
-                        Logout
-                </a>}
+                <div>
+                    <h2>
+                        <a href='#' onClick={() => 
+                            this.userService.logoutUser()
+                            .then(response => response.status === 200 ? window.location.reload() : alert('Could not log out.'))}>
+                                Logout
+                        </a>
+                    </h2>
+                    <h2><Link to="/profile">Profile</Link></h2>
+                </div>
+            }
             </div>
         )
     }

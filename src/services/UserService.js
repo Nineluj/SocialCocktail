@@ -9,6 +9,7 @@ export default class UserService {
         this.getLoggedInUserUrl = '//' + this.pathHost + '/api/user'
         this.logoutUserUrl = '//' + this.pathHost + '/api/user/logout'
         this.updateUserUrl = '//' + this.pathHost + '/api/user'
+        this.findUserByIdUrl = '//' + this.pathHost + '/api/users/USER_ID'
     }
 
     static myInstance = null;    
@@ -70,6 +71,13 @@ export default class UserService {
             headers: {
                 'content-type': 'application/json'
             }
+        }).then(response => response.json())
+    }
+
+    findUserById = (id) => {
+        return fetch(this.findUserByIdUrl.replace('USER_ID', id), {
+            method: 'GET',
+            credentials: 'include'
         }).then(response => response.json())
     }
 }

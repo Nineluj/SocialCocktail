@@ -38,6 +38,9 @@ class App extends React.Component {
                        render={() => <Register user={this.state.user}/>}/>
                 <Route exact path="/profile" 
                        render={() => <Profile user={this.state.user}/>}/>
+                <Route exact path="/profile/:id" 
+                       render={({match}) => <Profile id={match.params.id}
+                                                     user={{}}/>}/>
                 <Route exact path="/search" 
                        render={() => <Search user={this.state.user}/>}/>
             </Router>
