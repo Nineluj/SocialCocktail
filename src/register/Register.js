@@ -10,7 +10,8 @@ class Register extends React.Component {
         this.state = {
             username: '',
             password: '',
-            password2: ''
+            password2: '',
+            role: 'STANDARD'
         }
     }
 
@@ -62,18 +63,33 @@ class Register extends React.Component {
                     </div>
                 </div>
                 <div class="form-group row">
-                        <label for="verify"
-                               class="col-sm-2 col-form-label">
-                            Verify Password </label>
-                        <div class="col-sm-10">
-                            <input type="password"
-                                   class="form-control wbdv-password-fld"
-                                   id="verfiy"
-                                   placeholder="123qwe#$%"
-                                   value={this.state.password2}
-                                   onChange={this.updatePassword2}/>
-                        </div>
+                    <label for="verify"
+                            class="col-sm-2 col-form-label">
+                        Verify Password </label>
+                    <div class="col-sm-10">
+                        <input type="password"
+                                class="form-control wbdv-password-fld"
+                                id="verfiy"
+                                placeholder="123qwe#$%"
+                                value={this.state.password2}
+                                onChange={this.updatePassword2}/>
                     </div>
+                </div>
+                <div class="form-group row">
+                    <label for="role"
+                            class="col-sm-2 col-form-label">
+                            Role </label>
+                    <select class="form-control col-sm-10"
+                            id="role"
+                            value={this.state.role}
+                            onChange={(event) => this.setState({
+                                role: event.target.value
+                            })}>
+                        <option value='STANDARD'>Standard User</option>
+                        <option value='ADMIN'>Admin</option>
+
+                    </select>
+                </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
@@ -82,7 +98,8 @@ class Register extends React.Component {
                                         if (this.state.password === this.state.password2) {
                                             this.userService.registerUser({
                                             username: this.state.username,
-                                            password: this.state.password
+                                            password: this.state.password,
+                                            role: this.state.role
                                             })
                                         }
                                         else {

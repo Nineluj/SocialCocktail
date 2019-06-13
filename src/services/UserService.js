@@ -8,6 +8,7 @@ export default class UserService {
         this.registerUserUrl = '//' + this.pathHost + '/api/users/register'
         this.getLoggedInUserUrl = '//' + this.pathHost + '/api/user'
         this.logoutUserUrl = '//' + this.pathHost + '/api/user/logout'
+        this.updateUserUrl = '//' + this.pathHost + '/api/user'
     }
 
     static myInstance = null;    
@@ -59,5 +60,16 @@ export default class UserService {
             method: 'GET',
             credentials: 'include'
         })
+    }
+
+    updateUser = (user) => {
+        return fetch(this.updateUserUrl, {
+            method: 'PUT',
+            credentials: 'include',
+            body: JSON.stringify(user),
+            headers: {
+                'content-type': 'application/json'
+            }
+        }).then(response => response.json())
     }
 }

@@ -1,8 +1,18 @@
 import React from 'react'
+import UserService from '../services/UserService';
 
 class Profile extends React.Component {
     constructor(props) {
         super(props)
+        this.userService = UserService.getInstance()
+        console.log(this.props.user.id)
+        this.state = this.props.user
+    }
+
+    static getDerivedStateFromProps(props, state) {
+      if (props.user.username !== state.username) {
+        return props.user
+      }  
     }
 
     render() {
@@ -18,7 +28,11 @@ class Profile extends React.Component {
                             <input class="form-control"
                                 id="username"
                                 placeholder="Alice"
-                                readonly="true"/>
+                                readonly="true"
+                                onChange={(event) => this.setState({
+                                    username: event.target.value
+                                })}
+                                value={this.state.username}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -29,7 +43,11 @@ class Profile extends React.Component {
                             <input class="form-control"
                                 id="phone"
                                 placeholder="(123) 456-7890"
-                                type="tel"/>
+                                type="tel"
+                                onChange={(event) => this.setState({
+                                    phoneNum: event.target.value
+                                })}
+                                value={this.state.phoneNum}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -40,7 +58,11 @@ class Profile extends React.Component {
                             <input class="form-control"
                                 id="email"
                                 placeholder="alice@wonderland.com"
-                                type="email"/>
+                                type="email"
+                                onChange={(event) => this.setState({
+                                    email: event.target.value
+                                })}
+                                value={this.state.email}/>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -49,28 +71,30 @@ class Profile extends React.Component {
                             Role </label>
                         <div class="col-sm-10">
                             <select class="form-control"
-                                    id="role">
-                                <option>Faculty</option>
-                                <option>Student</option>
-                                <option>Admin</option>
+                                    id="role"
+                                    onChange={(event) => this.setState({
+                                        role: event.target.value
+                                    })}
+                                    value={this.state.role}>
+                                <option value='STANDARD'>Standard User</option>
+                                <option value='ADMIN'>Admin</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="dob"
-                            class="col-sm-2 col-form-label">
-                            Date of Birth </label>
-                        <div class="col-sm-10">
-                            <input class="form-control"
-                                id="dob"
-                                placeholder="mm/dd/yy"
-                                type="date"/>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
-                            <button class="btn btn-success btn-block">Update</button>
+                            <button class="btn btn-success btn-block"
+                                    onClick={() => this.userService.updateUser(this.state)
+                                                   .then(user => this.setState({
+                                                        username: user.username,
+                                                        phoneNum: user.phoneNum,
+                                                        email: user.email,
+                                                        role: user.role,
+                                                        id: user.id
+                                                   }))}>
+                                Update
+                            </button>
                             <button class="btn btn-danger btn-block">Logout</button>
                         </div>
                     </div>

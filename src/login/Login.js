@@ -11,7 +11,8 @@ class Login extends React.Component {
         this.userService = UserService.getInstance()
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            role: ''
         }
     }
 
