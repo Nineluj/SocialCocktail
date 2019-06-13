@@ -6,12 +6,12 @@ import { Redirect } from 'react-router'
 
 class Login extends React.Component {
     constructor(props) {
+        console.log(props.user)
         super(props)
         this.userService = UserService.getInstance()
         this.state = {
             username: '',
-            password: '',
-            loggedIn: 401
+            password: ''
         }
     }
 
@@ -28,7 +28,7 @@ class Login extends React.Component {
     }
 
     render() {
-        if (this.state.loggedIn === 200) {
+        if (this.props.user.username !== undefined) {
             return (
                 <Redirect to='/'/>
             )
@@ -70,11 +70,9 @@ class Login extends React.Component {
                                             username: this.state.username,
                                             password: this.state.password
                                             })
-                                            .then(response => {
-                                                console.log(response)
-                                                this.setState({
-                                                loggedIn: response.status
-                                            })})
+                                            .then(response => 
+                                                response.status === 200 ? 
+                                                this.props.retrieveLoggedInUser() : alert('Login failed.'))
                                         }}>Sign in</button>
                             <div class="row">
                                 <div class="col-6">

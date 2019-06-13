@@ -6,14 +6,43 @@ import Register from './register/Register';
 import Profile from './profile/Profile';
 import Search from './search/Search';
 import Home from './home/Home';
+import UserService from './services/UserService'
 
-const App = () =>
-    <Router>  
-        <Route exact path="/" component={Home}/>
-        <Route exact path="/login" component={Login}/>
-        <Route exact path="/register" component={Register}/>
-        <Route exact path="/profile" component={Profile}/>
-        <Route exact path="/search" component={Search}/>
-    </Router>
+class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.userService = UserService.getInstance()
+        this.state = {
+            user: {}
+        }
+        this.retrieveLoggedInUser()
+    }
+
+    retrieveLoggedInUser = () => {
+        this.userService.getLoggedInUser()
+        .then(returnedUser => {
+            this.setState({
+            user: returnedUser
+        })})
+    }
+
+    render() {
+        return (
+            <Router>  
+                <Route exact path="/" 
+                       render={() => <Home user={this.state.user}/>}/>
+                <Route exact path="/login" 
+                       render={() => <Login user={this.state.user}  
+                                            retrieveLoggedInUser={this.retrieveLoggedInUser}/>}/>
+                <Route exact path="/register" 
+                       render={() => <Register user={this.state.user}/>}/>
+                <Route exact path="/profile" 
+                       render={() => <Profile user={this.state.user}/>}/>
+                <Route exact path="/search" 
+                       render={() => <Search user={this.state.user}/>}/>
+            </Router>
+        )
+    }
+}
 
 export default App;

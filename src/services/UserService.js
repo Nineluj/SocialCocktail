@@ -6,6 +6,8 @@ export default class UserService {
 
         this.authenticateUserUrl = '//' + this.pathHost + '/api/users/login'
         this.registerUserUrl = '//' + this.pathHost + '/api/users/register'
+        this.getLoggedInUserUrl = '//' + this.pathHost + '/api/user'
+        this.logoutUserUrl = '//' + this.pathHost + '/api/user/logout'
     }
 
     static myInstance = null;    
@@ -37,6 +39,25 @@ export default class UserService {
             headers: {
                 'content-type': 'application/json'
             }
+        })
+    }
+
+    getLoggedInUser = () => {
+        return fetch(this.getLoggedInUserUrl, {
+            method: 'GET',
+            credentials: 'include'
+        }).then(response => {
+            if (response.status === 200) {
+                return response.json()
+            }
+            return {}
+        })
+    }
+
+    logoutUser = () => {
+        return fetch(this.logoutUserUrl, {
+            method: 'GET',
+            credentials: 'include'
         })
     }
 }
