@@ -55,7 +55,7 @@ class Search extends React.Component {
 
         return (
             <div className="demo">
-                        { modalShown && <CocktailInfoModal hideModal={this.hideModal} id={this.state.modalCocktailId}/> }
+                        { modalShown && <CocktailInfoModal hideModal={this.hideModal} id={this.state.modalCocktailId} user={this.props.user}/> }
                         <Container className="demo-main-div">
                             <Row>
                                 <Col xs={12}>

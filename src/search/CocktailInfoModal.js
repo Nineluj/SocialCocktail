@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import './CocktailInfoModal.scss';
 import CocktailDBApiService from "../services/CocktailDBApiService";
+import { Redirect } from 'react-router'
 
 class CocktailInfoModal extends React.Component {
     constructor(props, context) {
@@ -12,7 +13,8 @@ class CocktailInfoModal extends React.Component {
         this.state = {
             drink: {},
             ingredients: [],
-            commentActive: false
+            commentActive: false,
+            needToLogin: false
         };
     }
 
@@ -61,6 +63,12 @@ class CocktailInfoModal extends React.Component {
     render() {
         let { drink } = this.state;
 
+        if (this.state.needToLogin) {
+            return (
+                <Redirect to='/login'/>
+            )
+        }
+
         return (
             <Modal show={true} onHide={this.processClose}>
 
@@ -77,31 +85,53 @@ class CocktailInfoModal extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                         <div className='container'>
-                        <Button variant="secondary btn-block" onClick={this.processClose} className="cocktail-info-button">
-                            Close
-                        </Button>
-
-                        {!this.state.commentActive &&
-                            <Button variant="secondary btn-block" onClick={() => this.setState({
-                                commentActive: true
-                                })} className="cocktail-info-button">
-                                Add Comment
+                            <Button variant="secondary btn-block" onClick={this.processClose} className="cocktail-info-button">
+                                Close
                             </Button>
-                        }
 
-                        {this.state.commentActive &&
-                            <div>
-                                <Button variant="danger btn-block" onClick={() => this.setState({
-                                    commentActive: false
-                                    })} className="cocktail-info-button">
-                                    Cancel Comment
+                            <Button variant="success btn-block" onClick={() => {
+                                            if (this.props.user.id !== undefined) {
+                                                alert('You liked this drink! Call service method here')
+                                            }
+                                            else {
+                                                this.setState({
+                                                    needToLogin: true
+                                                })
+                                            }
+                                        }} className="cocktail-info-button">
+                                Like
+                            </Button>
+
+                            {!this.state.commentActive &&
+                                <Button variant="secondary btn-block" onClick={() => {
+                                            if (this.props.user.id !== undefined) {
+                                                this.setState({
+                                                    commentActive: true
+                                                })
+                                            }
+                                            else {
+                                                this.setState({
+                                                    needToLogin: true
+                                                })
+                                            }
+                                        }} className="cocktail-info-button">
+                                    Add Comment
                                 </Button>
-                                <textarea></textarea>
-                                <Button variant="success btn-block" className="cocktail-info-button">
-                                    Submit
-                                </Button>
-                            </div>
-                        }
+                            }
+
+                            {this.state.commentActive &&
+                                <div>
+                                    <textarea></textarea>
+                                    <Button variant="success btn-block" className="cocktail-info-button">
+                                        Submit
+                                    </Button>
+                                    <Button variant="danger btn-block" onClick={() => this.setState({
+                                        commentActive: false
+                                        })} className="cocktail-info-button">
+                                        Cancel Comment
+                                    </Button>
+                                </div>
+                            }
                         </div>
                 </Modal.Footer>
             </Modal>
