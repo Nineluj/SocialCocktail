@@ -11,7 +11,8 @@ class CocktailInfoModal extends React.Component {
 
         this.state = {
             drink: {},
-            ingredients: []
+            ingredients: [],
+            commentActive: false
         };
     }
 
@@ -75,9 +76,33 @@ class CocktailInfoModal extends React.Component {
                     Instructions: <i>{drink.strInstructions}</i>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={this.processClose} className="cocktail-info-button">
-                        Close
-                    </Button>
+                        <div className='container'>
+                        <Button variant="secondary btn-block" onClick={this.processClose} className="cocktail-info-button">
+                            Close
+                        </Button>
+
+                        {!this.state.commentActive &&
+                            <Button variant="secondary btn-block" onClick={() => this.setState({
+                                commentActive: true
+                                })} className="cocktail-info-button">
+                                Add Comment
+                            </Button>
+                        }
+
+                        {this.state.commentActive &&
+                            <div>
+                                <Button variant="danger btn-block" onClick={() => this.setState({
+                                    commentActive: false
+                                    })} className="cocktail-info-button">
+                                    Cancel Comment
+                                </Button>
+                                <textarea></textarea>
+                                <Button variant="success btn-block" className="cocktail-info-button">
+                                    Submit
+                                </Button>
+                            </div>
+                        }
+                        </div>
                 </Modal.Footer>
             </Modal>
         );
