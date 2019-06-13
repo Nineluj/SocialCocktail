@@ -13,7 +13,11 @@ class Home extends React.Component {
             <div>
                 <h1>Welcome to your Homepage, {this.props.user.username !== undefined ? this.props.user.username : 'Anonymous User'}</h1>
                 {this.props.user.id === undefined &&
-                <h2><Link to="/login">Login</Link></h2>}
+                    <div>
+                        <h2><Link to="/login">Login</Link></h2>
+                        <h2><Link to="/register">Register</Link></h2>
+                    </div>
+                }
 
                 {this.props.user.id !== undefined &&
                 <div>
@@ -27,6 +31,7 @@ class Home extends React.Component {
                     <h2><Link to="/profile">Profile</Link></h2>
                 </div>
             }
+            <h2><Link to="/search">Search</Link></h2>
             </div>
         )
     }

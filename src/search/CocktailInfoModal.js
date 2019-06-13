@@ -1,10 +1,12 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import './CocktailInfoModal.scss';
+import CocktailDBApiService from "../services/CocktailDBApiService";
 
 class CocktailInfoModal extends React.Component {
     constructor(props, context) {
         super(props, context);
+        this.cocktailDBApiService = CocktailDBApiService.getInstance()
         this.processClose = this.processClose.bind(this);
 
         this.state = {
@@ -18,9 +20,8 @@ class CocktailInfoModal extends React.Component {
     }
 
     loadData = (id) => {
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
-            .then(res => res.json())
-            .then(data => {
+        this.cocktailDBApiService.getCocktailDetailsById(id)
+        .then(data => {
                 this.setState({ drink: data.drinks[0] });
                 this.collectIngredients();
             });

@@ -4,10 +4,12 @@ import CocktailItem from './CocktailItem';
 import CocktailInfoModal from "./CocktailInfoModal";
 import Image from "react-bootstrap/Image";
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import CocktailDBApiService from '../services/CocktailDBApiService';
 
 class Search extends React.Component {
     constructor(props) {
         super(props);
+        this.cocktailDBApiService = CocktailDBApiService.getInstance()
     
         this.state = {
             cocktailSearchText: "",
@@ -18,21 +20,16 @@ class Search extends React.Component {
     }
     
     updateResults = (results) => {
-        results.then(
-            objs => this.setState({
-                shownCocktails: objs.drinks
-            })
-    
-        );
-    
-        console.log(this.state)
+        this.setState({
+            shownCocktails: results.drinks
+        })
     };
     
     updateSearch = (event) => {
         let search = event.target.value;
     
-        fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
-            .then(response => this.updateResults(response.json()));
+        this.cocktailDBApiService.searchCocktail(search)
+        .then(cocktails => this.updateResults(cocktails))
     
         this.setState({
             cocktailSearchText: event.target.value
@@ -69,8 +66,6 @@ class Search extends React.Component {
                             </Row>
                             <Row>
                                 <Col xs={12}>
-                                    <Link to="/login">Login</Link>
-                                    <Link to="/register">Register</Link>
                                     <Form>
                                         <Form.Group controlId="exampleForm.ControlInput1">
                                             <Form.Label>Lookup your favorite cocktail</Form.Label>
@@ -85,6 +80,7 @@ class Search extends React.Component {
                             </Row>
                             <Row>
                                 <Col xs={12} className="demo-results">
+                                    {console.log(shownCocktails)}
                                     {shownCocktails !== null && shownCocktails.map(cocktail =>
                                         <CocktailItem onSelect={this.showInformation} key={cocktail.idDrink} data={cocktail}/>)}
                                     {shownCocktails === null && <h5>Womp Womp. No matches found.</h5>}
