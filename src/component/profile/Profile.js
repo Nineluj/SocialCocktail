@@ -1,5 +1,5 @@
 import React from 'react'
-import UserService from '../services/UserService';
+import UserService from '../../services/UserService';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 
 class Profile extends React.Component {

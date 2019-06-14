@@ -1,10 +1,12 @@
 import React from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import './CocktailInfoModal.scss';
-import CocktailDBApiService from "../services/CocktailDBApiService";
 import { Redirect } from 'react-router'
-import CocktailService from "../services/CocktailService";
-import UserService from "../services/UserService";
+
+import CocktailDBApiService from "../../services/CocktailDBApiService";
+import CocktailService from "../../services/CocktailService";
+import UserService from "../../services/UserService";
+
+import './CocktailInfoModal.scss';
 
 class CocktailInfoModal extends React.Component {
     constructor(props, context) {

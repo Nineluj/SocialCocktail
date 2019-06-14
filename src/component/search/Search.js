@@ -4,7 +4,7 @@ import CocktailItem from './CocktailItem';
 import CocktailInfoModal from "./CocktailInfoModal";
 import Image from "react-bootstrap/Image";
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import CocktailDBApiService from '../services/CocktailDBApiService';
+import CocktailDBApiService from '../../services/CocktailDBApiService';
 
 class Search extends React.Component {
     constructor(props) {

@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.scss';
-import Login from './login/Login';
+import Login from './component/login/Login';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import Register from './register/Register';
-import Profile from './profile/Profile';
-import Search from './search/Search';
-import Home from './home/Home';
+import Register from './component/register/Register';
+import Profile from './component/profile/Profile';
+import Search from './component/search/Search';
+import Home from './component/home/Home';
 import UserService from './services/UserService'
 
 class App extends React.Component {
