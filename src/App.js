@@ -52,7 +52,11 @@ class App extends React.Component {
                        render={() => <Search user={this.state.user}/>}
                 />
                 <Route exact path="/details/:id"
-                       render={({match}) => <CocktailDetails id={match.params.id} user={this.state.user}/>}
+                       render={({match}) => <CocktailDetails id={match.params.id} user={this.state.user}/>} />
+
+                <Route exact path="/search/:searchCriteria" 
+                       render={({match}) => <Search user={this.state.user}
+                                                    searchCriteria={match.params.searchCriteria}/>}
                 />
             </Router>
         )

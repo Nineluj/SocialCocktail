@@ -35,6 +35,8 @@ class CocktailDetails extends React.Component {
 
         Promise.all([ourCall, externalApiCall]).then(values => {
             console.log(values);
+            this.setState({ drink: values[1].drinks[0] });
+            this.collectIngredients();
         })
     };
 
@@ -89,7 +91,7 @@ class CocktailDetails extends React.Component {
                         <img src={drink.strDrinkThumb} height={400} width={400} alt=""/>
                     </div>
 
-                    <div className="col-md-4">
+                    <Col xs={4} className="cocktail-info-scrollable">
                         <h3>
                             <FontAwesomeIcon className="mr-2" icon="info-circle"/>
                             {drink.strCategory}
@@ -97,7 +99,7 @@ class CocktailDetails extends React.Component {
                         <h5>
                             Ingredients:
                             <ul>
-                                {this.state.ingredients.map(ingr => <li>{ingr}</li>)}
+                                {this.state.ingredients.map((ingr, index) => <li key={index}>{ingr}</li>)}
                             </ul>
                         </h5>
                         <p>
@@ -149,7 +151,7 @@ class CocktailDetails extends React.Component {
                             </Button>
                         </div>
                         }
-                    </div>
+                    </Col>
                 </div>
                 <Row className="mt-5">
                     <Col xs={{offset: 3, span: 9}}>

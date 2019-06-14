@@ -1,6 +1,11 @@
 import React from 'react'
 import UserService from '../../services/UserService'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import HomeNavHeader from './HomeNavHeader';
+import AnonymousCommentsPanel from './CommentsPanel';
+import { Container, Row, Col } from 'react-bootstrap';
+import CommentsPanel from './CommentsPanel';
+import HomeWelcomePanel from './HomeWelcomePanel';
 
 class Home extends React.Component {
     constructor(props) {
@@ -10,29 +15,37 @@ class Home extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Welcome to your Homepage, {this.props.user.username !== undefined ? this.props.user.username : 'Anonymous User'}</h1>
-                {this.props.user.id === undefined &&
-                    <div>
-                        <h2><Link to="/login">Login</Link></h2>
-                        <h2><Link to="/register">Register</Link></h2>
-                    </div>
-                }
-
-                {this.props.user.id !== undefined &&
-                <div>
-                    <h2>
-                        <a href='#' onClick={() => 
-                            this.userService.logoutUser()
-                            .then(response => response.status === 200 ? window.location.reload() : alert('Could not log out.'))}>
-                                Logout
-                        </a>
-                    </h2>
-                    <h2><Link to="/profile">Profile</Link></h2>
-                </div>
-            }
-            <h2><Link to="/search">Search</Link></h2>
-            </div>
+            <Container>
+                <HomeNavHeader user={this.props.user}/>
+                <Container>
+                    <Row>
+                        <HomeWelcomePanel username={this.props.user.username}/>
+                        {
+                            // Below, for any comments panel, make the API call to get the
+                            // desired comments, and return a <CommentsPanel/> during the 
+                            // .then after the promise.
+                        }
+                        {this.props.user.id === undefined &&
+                        <CommentsPanel title='Recent Comments on our Platform'
+                                    comments={[1, 2, 3]}/>
+                        }
+                        {this.props.user.id !== undefined &&
+                        <Container>
+                            <Row>
+                                <Col xs={6}>
+                                    <CommentsPanel title='Following'
+                                                comments={[1, 2, 3]}/>
+                                </Col>
+                                <Col xs={6}>
+                                    <CommentsPanel title='Your Recent Activity'
+                                                comments={[1, 2, 3]}/>
+                                </Col>
+                            </Row>
+                        </Container>
+                        }
+                    </Row>
+                </Container>
+            </Container>
         )
     }
 }
