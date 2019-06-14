@@ -7,6 +7,7 @@ import Profile from './component/profile/Profile';
 import Search from './component/search/Search';
 import Home from './component/home/Home';
 import UserService from './services/UserService'
+import CocktailDetails from './component/details/CocktailDetails';
 
 class App extends React.Component {
     constructor(props) {
@@ -49,6 +50,9 @@ class App extends React.Component {
                 />
                 <Route exact path="/search" 
                        render={() => <Search user={this.state.user}/>}
+                />
+                <Route exact path="/details/:id"
+                       render={({match}) => <CocktailDetails id={match.params.id} user={this.state.user}/>}
                 />
             </Router>
         )
