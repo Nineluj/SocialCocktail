@@ -10,6 +10,7 @@ export default class UserService {
         this.logoutUserUrl = '//' + this.pathHost + '/api/user/logout'
         this.updateUserUrl = '//' + this.pathHost + '/api/user'
         this.findUserByIdUrl = '//' + this.pathHost + '/api/users/USER_ID'
+        this.addLikedCocktailUrl = '//' + this.pathHost + '/api/user/likes/cocktail/COCKTAIL_ID'
     }
 
     static myInstance = null;    
@@ -79,5 +80,12 @@ export default class UserService {
             method: 'GET',
             credentials: 'include'
         }).then(response => response.json())
+    }
+
+    addLikedCocktail = (id) => {
+        return fetch(this.addLikedCocktailUrl.replace('COCKTAIL_ID', id), {
+            method: 'POST',
+            credentials: 'include'
+        })
     }
 }

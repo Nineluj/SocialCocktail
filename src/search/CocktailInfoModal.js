@@ -3,11 +3,15 @@ import { Modal, Button, Form } from "react-bootstrap";
 import './CocktailInfoModal.scss';
 import CocktailDBApiService from "../services/CocktailDBApiService";
 import { Redirect } from 'react-router'
+import CocktailService from "../services/CocktailService";
+import UserService from "../services/UserService";
 
 class CocktailInfoModal extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.cocktailDBApiService = CocktailDBApiService.getInstance()
+        this.cocktailService = CocktailService.getInstance();
+        this.userService = UserService.getInstance();
         this.processClose = this.processClose.bind(this);
 
         this.state = {
@@ -27,6 +31,10 @@ class CocktailInfoModal extends React.Component {
         .then(data => {
                 this.setState({ drink: data.drinks[0] });
                 this.collectIngredients();
+                this.cocktailService.createCocktail({
+                    id: id,
+                    name: this.state.drink.strDrink
+                })
             });
     };
 
@@ -91,7 +99,7 @@ class CocktailInfoModal extends React.Component {
 
                             <Button variant="success btn-block" onClick={() => {
                                             if (this.props.user.id !== undefined) {
-                                                alert('You liked this drink! Call service method here')
+                                                this.userService.addLikedCocktail(this.props.id)
                                             }
                                             else {
                                                 this.setState({
