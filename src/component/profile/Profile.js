@@ -45,15 +45,15 @@ class Profile extends React.Component {
         }
         else if (!this.state.isPublic) {
             return (
-                <div class="container">
+                <div className="container">
                     <h1>Profile</h1>
                     <form>
-                        <div class="form-group row">
+                        <div className="form-group row">
                             <label for="username"
-                                class="col-sm-2 col-form-label">
+                                className="col-sm-2 col-form-label">
                                 Username </label>
-                            <div class="col-sm-10">
-                                <input class="form-control"
+                            <div className="col-sm-10">
+                                <input className="form-control"
                                     id="username"
                                     placeholder="Alice"
                                     readonly="true"
@@ -63,12 +63,12 @@ class Profile extends React.Component {
                                     value={this.state.user.username}/>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div className="form-group row">
                             <label for="phone"
-                                class="col-sm-2 col-form-label">
+                                className="col-sm-2 col-form-label">
                                 Phone </label>
-                            <div class="col-sm-10">
-                                <input class="form-control"
+                            <div className="col-sm-10">
+                                <input className="form-control"
                                     id="phone"
                                     placeholder="(123) 456-7890"
                                     type="tel"
@@ -78,12 +78,12 @@ class Profile extends React.Component {
                                     value={this.state.user.phoneNum}/>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div className="form-group row">
                             <label for="email"
-                                class="col-sm-2 col-form-label">
+                                className="col-sm-2 col-form-label">
                                 Email </label>
-                            <div class="col-sm-10">
-                                <input class="form-control"
+                            <div className="col-sm-10">
+                                <input className="form-control"
                                     id="email"
                                     placeholder="alice@wonderland.com"
                                     type="email"
@@ -93,12 +93,12 @@ class Profile extends React.Component {
                                     value={this.state.user.email}/>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div className="form-group row">
                             <label for="role"
-                                class="col-sm-2 col-form-label">
+                                className="col-sm-2 col-form-label">
                                 Role </label>
-                            <div class="col-sm-10">
-                                <select class="form-control"
+                            <div className="col-sm-10">
+                                <select className="form-control"
                                         id="role"
                                         onChange={(event) => this.setState({
                                             role: event.target.value
@@ -109,17 +109,17 @@ class Profile extends React.Component {
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
-                                <button class="btn btn-success btn-block"
+                        <div className="form-group row">
+                            <label className="col-sm-2 col-form-label"></label>
+                            <div className="col-sm-10">
+                                <button className="btn btn-success btn-block"
                                         onClick={() => this.userService.updateUser(this.state)
                                                     .then(user => this.setState({
                                                         user: user
                                                     }))}>
                                     Update
                                 </button>
-                                <button class="btn btn-danger btn-block">Logout</button>
+                                <button className="btn btn-danger btn-block">Logout</button>
                             </div>
                         </div>
                     </form>
@@ -129,15 +129,15 @@ class Profile extends React.Component {
         else {
             console.log('We are now rendering with this state: ', this.state.user)
             return (
-                <div class="container">
+                <div className="container">
                         <h1>Profile</h1>
                         <form>
-                            <div class="form-group row">
+                            <div className="form-group row">
                                 <label for="username"
-                                    class="col-sm-2 col-form-label">
+                                    className="col-sm-2 col-form-label">
                                     Username </label>
-                                <div class="col-sm-10">
-                                    <input class="form-control"
+                                <div className="col-sm-10">
+                                    <input className="form-control"
                                         id="username"
                                         placeholder="Alice"
                                         readonly="true"
@@ -147,12 +147,12 @@ class Profile extends React.Component {
                                         value={this.state.user.username}/>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div className="form-group row">
                                 <label for="role"
-                                    class="col-sm-2 col-form-label">
+                                    className="col-sm-2 col-form-label">
                                     Role </label>
-                                <div class="col-sm-10">
-                                    <select class="form-control"
+                                <div className="col-sm-10">
+                                    <select className="form-control"
                                             id="role"
                                             disabled="true"
                                             onChange={(event) => this.setState({
@@ -164,8 +164,8 @@ class Profile extends React.Component {
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 col-form-label"></label>
+                            <div className="form-group row">
+                                <label className="col-sm-2 col-form-label"></label>
                             </div>
                         </form>
                     </div>

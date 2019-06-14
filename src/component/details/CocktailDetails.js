@@ -7,7 +7,7 @@ import CocktailDBApiService from "../../services/CocktailDBApiService";
 import CocktailService from "../../services/CocktailService";
 import UserService from "../../services/UserService";
 
-import './CocktailInfoModal.scss';
+import './CocktailDetails.scss';
 
 class CocktailDetails extends React.Component {
     constructor(props, context) {
@@ -37,6 +37,10 @@ class CocktailDetails extends React.Component {
             console.log(values);
             this.setState({ drink: values[1].drinks[0] });
             this.collectIngredients();
+
+            if (values[0] === -1) {
+                // TODO make drink with service call
+            }
         })
     };
 

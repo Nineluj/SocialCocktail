@@ -40,51 +40,51 @@ class Register extends React.Component {
         }
 
         return (
-            <div class="container">
+            <div className="container">
             <h1>Sign Up</h1>
-                <div class="form-group row">
+                <div className="form-group row">
                     <label for="username"
-                           class="col-sm-2 col-form-label">
+                           className="col-sm-2 col-form-label">
                         Username </label>
-                    <div class="col-sm-10">
-                        <input class="form-control"
+                    <div className="col-sm-10">
+                        <input className="form-control"
                                id="username"
                                placeholder="Alice"
                                value={this.state.username}
                                onChange={this.updateUsername}/>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div className="form-group row">
                     <label for="password"
-                           class="col-sm-2 col-form-label">
+                           className="col-sm-2 col-form-label">
                         Password </label>
-                    <div class="col-sm-10">
+                    <div className="col-sm-10">
                         <input type="password"
-                               class="form-control wbdv-password-fld"
+                               className="form-control wbdv-password-fld"
                                id="password"
                                placeholder="123qwe#$%"
                                value={this.state.password}
                                onChange={this.updatePassword}/>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div className="form-group row">
                     <label for="verify"
-                            class="col-sm-2 col-form-label">
+                            className="col-sm-2 col-form-label">
                         Verify Password </label>
-                    <div class="col-sm-10">
+                    <div className="col-sm-10">
                         <input type="password"
-                                class="form-control wbdv-password-fld"
+                                className="form-control wbdv-password-fld"
                                 id="verfiy"
                                 placeholder="123qwe#$%"
                                 value={this.state.password2}
                                 onChange={this.updatePassword2}/>
                     </div>
                 </div>
-                <div class="form-group row">
+                <div className="form-group row">
                     <label for="role"
-                            class="col-sm-2 col-form-label">
+                            className="col-sm-2 col-form-label">
                             Role </label>
-                    <select class="form-control col-sm-10"
+                    <select className="form-control col-sm-10"
                             id="role"
                             value={this.state.role}
                             onChange={(event) => this.setState({
@@ -95,10 +95,10 @@ class Register extends React.Component {
 
                     </select>
                 </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <button class="btn btn-primary btn-block"
+                <div className="form-group row">
+                    <label className="col-sm-2 col-form-label"></label>
+                    <div className="col-sm-10">
+                        <button className="btn btn-primary btn-block"
                                 onClick={() => {
                                         if (this.state.password === this.state.password2) {
                                             this.userService.registerUser({
@@ -114,8 +114,8 @@ class Register extends React.Component {
                                             alert("Passwords do not match")
                                         }   
                                     }}>Sign up</button>
-                        <div class="row">
-                            <div class="col-6">
+                        <div className="row">
+                            <div className="col-6">
                                 <Link to="/login">Login</Link>
                             </div>
                         </div>

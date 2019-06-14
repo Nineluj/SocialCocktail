@@ -1,6 +1,7 @@
 import React from 'react';
 import {Card, Button} from 'react-bootstrap';
 import './CocktailItem.scss'
+import {Link} from "react-router-dom";
 
 const CocktailItem = (props) => (
     <Card bg="dark" style={{ width: '18rem' }} className="mb-3 cocktail-card">
@@ -11,7 +12,9 @@ const CocktailItem = (props) => (
                     <li>Category: {props.data.strCategory}</li>
                     <li>Glass Type: {props.data.strGlass}</li>
                 </ul>
-            <Button variant="primary" onClick={() => props.onSelect(props.data.idDrink)}>See More</Button>
+            <Button variant="primary">
+                <Link to={`/details/${props.data.idDrink}`}>See More</Link>
+            </Button>
         </Card.Body>
     </Card>
 );
