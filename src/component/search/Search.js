@@ -5,19 +5,47 @@ import CocktailInfoModal from "./CocktailInfoModal";
 import Image from "react-bootstrap/Image";
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import CocktailDBApiService from '../../services/CocktailDBApiService';
+import { Redirect } from 'react-router'
 
 class Search extends React.Component {
     constructor(props) {
+        console.log("Constructing search")
         super(props);
         this.cocktailDBApiService = CocktailDBApiService.getInstance()
-    
-        this.state = {
-            cocktailSearchText: "",
-            shownCocktails: [],
-            modalShown: false,
-            modalCocktailId: -1
+        
+        if (this.props.searchCriteria !== undefined) {
+            console.log(this.props.searchCriteria)
+            this.state = {
+                cocktailSearchText: this.props.searchCriteria,
+                shownCocktails: [],
+                modalShown: false,
+                modalCocktailId: -1,
+                rerouteActive: false
+            }
+            this.searchCocktail()
+        }
+        else {
+            this.state = {
+                cocktailSearchText: "",
+                shownCocktails: [],
+                modalShown: false,
+                modalCocktailId: -1,
+                rerouteActive: false
+            }
         }
     }
+
+    // static getDerivedStateFromProps(props, state) {
+    //     if (props.searchCriteria !== state.searchCriteria) {
+    //         return {
+    //             cocktailSearchText: props.searchCriteria,
+    //             shownCocktails: [],
+    //             modalShown: false,
+    //             modalCocktailId: -1,
+    //             rerouteActive: false
+    //         } 
+    //     }
+    // }
     
     updateResults = (results) => {
         this.setState({
@@ -50,7 +78,23 @@ class Search extends React.Component {
         });
     };
 
+    rerouteSearch = () => {
+        this.setState({
+            rerouteActive: true
+        })
+    }
+
+    searchCocktail = () => {
+        this.cocktailDBApiService.searchCocktail(this.state.cocktailSearchText)
+        .then(cocktails => this.updateResults(cocktails))
+    }
+
     render() {
+        if (this.state.rerouteActive) {
+            return (
+                <Redirect to={`/search/${this.state.cocktailSearchText}`}/>
+            )
+        }
         let { cocktailSearchText, shownCocktails, modalShown } = this.state;
 
         return (
@@ -69,11 +113,26 @@ class Search extends React.Component {
                                     <Form>
                                         <Form.Group controlId="exampleForm.ControlInput1">
                                             <Form.Label>Lookup your favorite cocktail</Form.Label>
-                                            <Form.Control type="text"
-                                                        placeholder="Margarita"
-                                                        value={cocktailSearchText}
-                                                        onChange={this.updateSearch}
-                                            />
+                                            <Row>
+                                                <Col xs={9}>
+                                                    <Form.Control type="text"
+                                                                placeholder="Margarita"
+                                                                value={cocktailSearchText}
+                                                                onChange={(event) => this.setState({
+                                                                    cocktailSearchText: event.target.value
+                                                                })}
+                                                    />
+                                                </Col>
+                                                <Col xs={3}>
+                                                    <Link to={`/search/${this.state.cocktailSearchText}`}
+                                                          onClick={this.searchCocktail}>
+                                                              <button class="btn btn-success"
+                                                                      type="button">
+                                                                      Search
+                                                              </button>
+                                                    </Link>
+                                                </Col>
+                                            </Row>
                                         </Form.Group>
                                     </Form>
                                 </Col>
