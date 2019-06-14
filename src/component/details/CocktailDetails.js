@@ -39,10 +39,21 @@ class CocktailDetails extends React.Component {
             this.collectIngredients();
 
             if (values[0] === -1) {
-                // TODO make drink with service call
+                this.cocktailService.createCocktail({
+                    id: id,
+                    name: this.state.drink.strDrink
+                })
+            } else {
+                console.log('@@@', values)
+                this.loadMetaData(values[0])
             }
         })
     };
+
+    loadMetaData = (cocktail) => {
+        console.log(cocktail.comments);
+        // TODO show likes and comments for this cocktail
+    }
 
     collectIngredients = () => {
         let ingredientArr = [];
