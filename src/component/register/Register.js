@@ -1,7 +1,6 @@
 import React from 'react'
 import UserService from '../../services/UserService'
-
-
+import {Link, Redirect} from "react-router-dom";
 
 class Register extends React.Component {
     constructor(props) {
@@ -34,6 +33,12 @@ class Register extends React.Component {
     }
 
     render() {
+        if (this.props.user.username !== undefined) {
+            return (
+                <Redirect to='/'/>
+            )
+        }
+
         return (
             <div class="container">
             <h1>Sign Up</h1>
@@ -100,7 +105,10 @@ class Register extends React.Component {
                                             username: this.state.username,
                                             password: this.state.password,
                                             role: this.state.role
-                                            })
+                                            }).then(response =>
+                                                response.status === 200
+                                                    ? this.props.retrieveLoggedInUser()
+                                                    : alert('Registration failed.'))
                                         }
                                         else {
                                             alert("Passwords do not match")
@@ -108,7 +116,7 @@ class Register extends React.Component {
                                     }}>Sign up</button>
                         <div class="row">
                             <div class="col-6">
-                                <a href="../login/login.template.client.html">Login</a>
+                                <Link to="/login">Login</Link>
                             </div>
                         </div>
                     </div>

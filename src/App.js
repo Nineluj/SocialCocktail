@@ -14,7 +14,7 @@ class App extends React.Component {
         this.userService = UserService.getInstance()
         this.state = {
             user: {}
-        }
+        };
         this.retrieveLoggedInUser()
     }
 
@@ -23,26 +23,33 @@ class App extends React.Component {
         .then(returnedUser => {
             this.setState({
             user: returnedUser
-        })})
-    }
+        })});
+    };
 
     render() {
         return (
             <Router>  
                 <Route exact path="/" 
-                       render={() => <Home user={this.state.user}/>}/>
+                       render={() => <Home user={this.state.user}/>}
+                />
                 <Route exact path="/login" 
                        render={() => <Login user={this.state.user}  
-                                            retrieveLoggedInUser={this.retrieveLoggedInUser}/>}/>
+                                            retrieveLoggedInUser={this.retrieveLoggedInUser}/>}
+                />
                 <Route exact path="/register" 
-                       render={() => <Register user={this.state.user}/>}/>
+                       render={() => <Register user={this.state.user}
+                                               retrieveLoggedInUser={this.retrieveLoggedInUser}/>}
+                />
                 <Route exact path="/profile" 
-                       render={() => <Profile user={this.state.user}/>}/>
+                       render={() => <Profile user={this.state.user}/>}
+                />
                 <Route exact path="/profile/:id" 
                        render={({match}) => <Profile id={match.params.id}
-                                                     user={{}}/>}/>
+                                                     user={{}}/>}
+                />
                 <Route exact path="/search" 
-                       render={() => <Search user={this.state.user}/>}/>
+                       render={() => <Search user={this.state.user}/>}
+                />
             </Router>
         )
     }

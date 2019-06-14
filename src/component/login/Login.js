@@ -1,8 +1,7 @@
 import React from 'react'
 import UserService from '../../services/UserService'
 import { Redirect } from 'react-router'
-
-
+import { Link } from "react-router-dom";
 
 class Login extends React.Component {
     constructor(props) {
@@ -71,7 +70,7 @@ class Login extends React.Component {
                                             username: this.state.username,
                                             password: this.state.password
                                             })
-                                            .then(response => 
+                                            .then(response =>
                                                 response.status === 200 ? 
                                                 this.props.retrieveLoggedInUser() : alert('Login failed.'))
                                         }}>Sign in</button>
@@ -80,8 +79,7 @@ class Login extends React.Component {
                                     <a href="#">Forgot Password?</a>
                                 </div>
                                 <div class="col-6">
-                                    <a href="../register/register.template.client.html"
-                                    class="float-right">Sign up</a>
+                                    <Link to="/register" className="float-right">Sign up</Link>
                                 </div>
                             </div>
                         </div>
