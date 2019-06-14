@@ -1,7 +1,9 @@
-export default class CocktailService {
-    constructor() {
-        this.pathHost = window.location.hostname === 'localhost' ? 'localhost:8080' : '';
+import BaseService from "./BaseService";
 
+export default class CocktailService extends BaseService {
+    constructor() {
+        super();
+        this.pathHost = window.location.hostname === 'localhost' ? 'localhost:8080' : '';
         this.createCocktailUrl = '//' + this.pathHost + '/api/cocktails'
     }
 
@@ -24,4 +26,6 @@ export default class CocktailService {
             }
         }).then(response => response.status)
     }
+
+    findCocktailById = id => this.findById(`/cocktails/${id}`);
 }

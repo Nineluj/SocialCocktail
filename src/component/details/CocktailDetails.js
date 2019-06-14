@@ -30,15 +30,12 @@ class CocktailDetails extends React.Component {
     }
 
     loadData = (id) => {
-        this.cocktailDBApiService.getCocktailDetailsById(id)
-            .then(data => {
-                this.setState({ drink: data.drinks[0] });
-                this.collectIngredients();
-                this.cocktailService.createCocktail({
-                    id: id,
-                    name: this.state.drink.strDrink
-                }) // TODO get comments and likes
-            });
+        let ourCall = this.cocktailService.findCocktailById(id);
+        let externalApiCall = this.cocktailDBApiService.getCocktailDetailsById(id);
+
+        Promise.all([ourCall, externalApiCall]).then(values => {
+            console.log(values);
+        })
     };
 
     collectIngredients = () => {
@@ -94,13 +91,11 @@ class CocktailDetails extends React.Component {
 
                     <div className="col-md-4">
                         <h3>
-                            <FontAwesomeIcon className="mr-2" icon="info-circle" size="md"/>
+                            <FontAwesomeIcon className="mr-2" icon="info-circle"/>
                             {drink.strCategory}
                         </h3>
                         <h5>
                             Ingredients:
-
-
                             <ul>
                                 {this.state.ingredients.map(ingr => <li>{ingr}</li>)}
                             </ul>
@@ -158,7 +153,8 @@ class CocktailDetails extends React.Component {
                 </div>
                 <Row className="mt-5">
                     <Col xs={{offset: 3, span: 9}}>
-                        <h4>What other users are saying</h4>
+                        <h4><FontAwesomeIcon icon="comments" className="mr-2"/> What other users are saying</h4>
+
                     </Col>
                 </Row>
             </div>
