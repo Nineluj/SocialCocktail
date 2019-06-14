@@ -1,14 +1,24 @@
 import React from 'react'
+import Card from "react-bootstrap/Card";
 
 const Comment = () =>
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">I love Margaritas!</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Posted on: 5/17/2020</h6>
-        <p class="card-text">I really, really love this recipe. Exquisite.</p>
-        <a href="#" class="card-link">TomVCookie</a>
-        <a href="#" class="card-link">Margarita</a>
-    </div>
-</div>
+<Card className="mx-auto">
+    <Card.Body>
+        <Card.Title>
+            I love Margaritas!
+        </Card.Title>
+
+        <Card.Subtitle className="mb-2 text-muted">
+            Posted on: 5/17/2020
+        </Card.Subtitle>
+
+        <Card.Text>
+            I really, really love this recipe. Exquisite.
+        </Card.Text>
+
+        <Card.Link><a href="#"> TomVCookie </a></Card.Link>
+        <Card.Link><a href="#">Margarita</a></Card.Link>
+    </Card.Body>
+</Card>
 
 export default Comment

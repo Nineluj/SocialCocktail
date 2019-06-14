@@ -7,12 +7,13 @@ import UserService from '../../services/UserService';
 let userService = UserService.getInstance()
 
 const HomeNavHeader = ({user}) =>
-    <Navbar>
-        <Navbar.Brand as={Link} to="/" >
+    <Navbar expand="lg">
+        <Navbar.Brand as={Link} to="/">
             <h1>
                 Social Cocktail
             </h1>
         </Navbar.Brand>
+        <Navbar.Toggle />
         <Navbar.Collapse>
             <Nav className="mr-auto">
             <NavItem eventkey={1} href="/">

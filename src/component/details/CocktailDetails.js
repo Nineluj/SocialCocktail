@@ -1,5 +1,5 @@
 import React from "react";
-import {Modal, Button, Form, Col, Row } from "react-bootstrap";
+import {Container, Button, Form, Col, Row } from "react-bootstrap";
 import { Redirect } from 'react-router'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";
 
@@ -79,19 +79,19 @@ class CocktailDetails extends React.Component {
         }
 
         return (
-            <div className="container">
+            <Container fluid>
                 <Row>
-                    <Col xs={{span: 5, offset: 3}}>
+                    <Col xs={{span: 5, offset: 1}}>
                     <h1 className="my-4">{drink.strDrink}</h1>
                     </Col>
                 </Row>
 
                 <div className="row">
-                    <div className="col-md-5 offset-3">
+                    <Col lg={{span: 5, offset: 1}} md={{span: 10, offset: 1}} >
                         <img src={drink.strDrinkThumb} height={400} width={400} alt=""/>
-                    </div>
+                    </Col>
 
-                    <Col xs={4} className="cocktail-info-scrollable">
+                    <Col lg={{span: 5}} md={{span: 10}} className="cocktail-info-scrollable">
                         <h3>
                             <FontAwesomeIcon className="mr-2" icon="info-circle"/>
                             {drink.strCategory}
@@ -154,14 +154,11 @@ class CocktailDetails extends React.Component {
                     </Col>
                 </div>
                 <Row className="mt-5">
-                    <Col xs={{offset: 3, span: 9}}>
-                        <h4><FontAwesomeIcon icon="comments" className="mr-2"/> What other users are saying</h4>
-
+                    <Col xs={{span: 12}}>
+                        <h4 className="cocktail-discussion-title"><FontAwesomeIcon icon="comments" className="mr-2"/> What other users are saying</h4>
                     </Col>
                 </Row>
-            </div>
-
-
+            </Container>
         );
     }
 }
