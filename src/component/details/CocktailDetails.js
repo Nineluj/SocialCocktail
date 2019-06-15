@@ -24,7 +24,8 @@ class CocktailDetails extends React.Component {
             ingredients: [],
             commentActive: false,
             newCommentTitle: '',
-            newCommentText: ''
+            newCommentText: '',
+            comments: []
         };
     }
 
@@ -37,7 +38,6 @@ class CocktailDetails extends React.Component {
         let externalApiCall = this.cocktailDBApiService.getCocktailDetailsById(id);
 
         Promise.all([ourCall, externalApiCall]).then(values => {
-            console.log(values);
             this.setState({ drink: values[1].drinks[0] });
             this.collectIngredients();
 
@@ -53,7 +53,10 @@ class CocktailDetails extends React.Component {
     };
 
     loadMetaData = (cocktail) => {
-        console.log(cocktail.comments);
+        this.commentService.findCommentsByCocktailId(this.props.id)
+        .then(comments => this.setState({
+            comments: comments
+        }))
         // TODO show likes and comments for this cocktail
     }
 
@@ -180,8 +183,8 @@ class CocktailDetails extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={{span:10, offset: 1}}>
-                        {/*<CommentsPanel title=''*/}
-                        {/*               comments={[1, 2, 3]}/>*/}
+                        <CommentsPanel title=''
+                                       comments={this.state.comments}/>
                     </Col>
                 </Row>
 
@@ -213,14 +216,16 @@ class CocktailDetails extends React.Component {
                         <div>
                             <Form>
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
-                                    <Form.Label>Comment</Form.Label>
+                                    <Form.Label>New Comment</Form.Label>
                                     <Form.Control value={this.state.newCommentTitle}
                                                   onChange={this.changeCommentTitle}
+                                                  placeholder="Title"
                                     />
                                     <Form.Control as="textarea"
                                                   rows="3"
                                                   value={this.state.newCommentText}
                                                   onChange={this.changeCommentText}
+                                                  placeholder="Comment"
                                     />
                                 </Form.Group>
                                 <div className="text-center">

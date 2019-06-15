@@ -7,7 +7,6 @@ const CommentsPanel = ({title, comments}) =>
         {// Here, hit API endpoint to get most recent
         //  comments, and .map(comment => <Comment/>)
         }
-        {console.log(comments)}
         {comments.map(comment => <Comment title={comment.title}
                                           date={comment.created}
                                           content={comment.text}
