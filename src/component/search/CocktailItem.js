@@ -8,13 +8,15 @@ const CocktailItem = (props) => (
         <Card.Img variant="top" src={props.data.strDrinkThumb} />
         <Card.Body>
             <Card.Title>{props.data.strDrink}</Card.Title>
-                <ul>
-                    <li>Category: {props.data.strCategory}</li>
-                    <li>Glass Type: {props.data.strGlass}</li>
-                </ul>
-            <Button variant="primary">
-                <Link to={`/details/${props.data.idDrink}`}>See More</Link>
-            </Button>
+            <ul>
+                <li>Category: {props.data.strCategory}</li>
+                <li>Glass Type: {props.data.strGlass}</li>
+            </ul>
+            <Link className="cocktail-card-link" to={`/details/${props.data.idDrink}`}>
+                <Button variant="primary">
+                    See More
+                </Button>
+            </Link>
         </Card.Body>
     </Card>
 );

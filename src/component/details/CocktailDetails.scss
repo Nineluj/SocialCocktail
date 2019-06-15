@@ -1,6 +1,6 @@
-.cocktail-info-button {
-  margin: 0 auto;
-}
+//.cocktail-info-button {
+//  margin: 0 auto;
+//}
 
 .cocktail-info-scrollable {
   height: 400px;
@@ -16,4 +16,9 @@ textarea {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   width: 100%
+}
+
+.cocktail-likers {
+  border-radius: 15px;
+  background-color: darkgrey;
 }

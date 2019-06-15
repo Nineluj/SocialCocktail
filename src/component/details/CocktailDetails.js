@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Button, Form, Col, Row } from "react-bootstrap";
-import { Redirect } from 'react-router'
+import {Container, Button, Form, Col, Row, Badge} from "react-bootstrap";
+import {Redirect, withRouter} from 'react-router'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";
 
 import CocktailDBApiService from "../../services/CocktailDBApiService";
@@ -15,13 +15,11 @@ class CocktailDetails extends React.Component {
         this.cocktailDBApiService = CocktailDBApiService.getInstance();
         this.cocktailService = CocktailService.getInstance();
         this.userService = UserService.getInstance();
-        this.processClose = this.processClose.bind(this);
 
         this.state = {
             drink: {},
             ingredients: [],
-            commentActive: false,
-            needToLogin: false
+            commentActive: false
         };
     }
 
@@ -44,7 +42,6 @@ class CocktailDetails extends React.Component {
                     name: this.state.drink.strDrink
                 })
             } else {
-                console.log('@@@', values)
                 this.loadMetaData(values[0])
             }
         })
@@ -76,33 +73,39 @@ class CocktailDetails extends React.Component {
         }
     }
 
-    processClose = () => {
-        this.setState({
-            editedValue: ''
+    navigateToLogin = (action) => {
+        this.props.history.push({
+            pathname: '/login',
+            state: { message: `You must log in to leave ${action} on a drink.` }
         });
-
-        this.props.hideModal();
     };
 
     render() {
         let { drink } = this.state;
 
-        if (this.state.needToLogin) {
-            return (
-                <Redirect to='/login'/>
-            )
-        }
-
         return (
             <Container fluid>
                 <Row>
                     <Col xs={{span: 5, offset: 1}}>
-                    <h1 className="my-4">{drink.strDrink}</h1>
+                        <h1 className="my-4">
+                            {drink.strDrink}
+                            <Button variant="success" className="mr-2 ml-2" onClick={() => {
+                                if (this.props.user.id !== undefined) {
+                                    this.userService.addLikedCocktail(this.props.id)
+                                }
+                                else {
+                                    this.navigateToLogin("a like");
+                                }}}>
+                                <FontAwesomeIcon icon="thumbs-up" size="lg"/>
+                            </Button>
+
+                        </h1>
+
                     </Col>
                 </Row>
 
                 <div className="row">
-                    <Col lg={{span: 5, offset: 1}} md={{span: 10, offset: 1}} >
+                    <Col lg={{span: 5, offset: 1}} md={{span: 10, offset: 1}} className="mb-4">
                         <img src={drink.strDrinkThumb} height={400} width={400} alt=""/>
                     </Col>
 
@@ -120,62 +123,91 @@ class CocktailDetails extends React.Component {
                         <p>
                             Instructions: <i>{drink.strInstructions}</i>
                         </p>
-
-                        <FontAwesomeIcon icon="thumbs-up"
-                                         size="2x"
-                                         onClick={() => {
-                                             if (this.props.user.id !== undefined) {
-                                                 this.userService.addLikedCocktail(this.props.id)
-                                             }
-                                             else {
-                                                 this.setState({
-                                                     needToLogin: true
-                                                 })
-                                             }
-                                         }}
-                        />
-
-                        <FontAwesomeIcon icon="comment"
-                                         size="2x"
-                                         className="ml-3"
-                                         onClick={() => {
-                                             if (this.props.user.id !== undefined) {
-                                                 this.setState({
-                                                     commentActive: true
-                                                 })
-                                             }
-                                             else {
-                                                 this.setState({
-                                                     needToLogin: true
-                                                 })
-                                             }
-                                         }}
-                        />
-
-                        {this.state.commentActive &&
-                        <div>
-                            <textarea></textarea>
-                            <Button variant="success btn-block" className="cocktail-info-button">
-                                Submit
-                            </Button>
-                            <Button variant="danger btn-block"
-                                    onClick={() =>
-                                        this.setState({commentActive: false})}
-                                    className="cocktail-info-button">
-                                Cancel Comment
-                            </Button>
-                        </div>
-                        }
                     </Col>
                 </div>
-                <Row className="mt-5">
-                    <Col xs={{span: 12}}>
-                        <h4 className="cocktail-discussion-title"><FontAwesomeIcon icon="comments" className="mr-2"/> What other users are saying</h4>
+                <Row className="mt-2" >
+                    <Col xs={{span: 10, offset: 1}} className="pt-4 pb-4 cocktail-likers">
+                        <h4>
+
+                            { this.state.likedBy
+                                ?
+                            <React.Fragment>
+                                <span className="mr-2">
+                                    Liked by these users:
+                                </span>
+
+                                { this.state.likedBy.map(user =>
+                                    <Badge pill variant="secondary">
+                                        {user.firstName + " " + user.lastName}
+                                    </Badge>)
+                                }
+                            </React.Fragment>
+                                :
+                                <span>No one has liked this drink yet, be the first!</span>
+                            }
+
+                        </h4>
                     </Col>
                 </Row>
+
+                <Row className="mt-4">
+                    <Col xs={{span: 12}}>
+                        <h4 className="cocktail-discussion-title"><FontAwesomeIcon icon="comments" size="lg" className="mr-2"/> What other users are saying</h4>
+                    </Col>
+                </Row>
+                {!this.state.commentActive &&
+                <Row className="mt-3">
+                    <Col xs={12} className="text-center">
+                        <Button onClick={() => {
+                            if (this.props.user.id !== undefined) {
+                                this.setState({
+                                    commentActive: true
+                                })
+                            } else {
+                                this.navigateToLogin("a comment");
+                            }
+                        }}>
+                            <h4 className="mt-2 mb-2">
+                                <FontAwesomeIcon icon="comment"
+                                                 className="mr-2"
+                                />
+                                Add a comment
+                            </h4>
+                        </Button>
+                    </Col>
+                </Row>
+                }
+                {this.state.commentActive &&
+                <Row>
+                    <Col xs={{span: 8, offset: 2}}>
+                        <div>
+                            <Form>
+                                <Form.Group controlId="exampleForm.ControlTextarea1">
+                                    <Form.Label>Comment</Form.Label>
+                                    <Form.Control as="textarea" rows="3" />
+                                </Form.Group>
+                                <div className="text-center">
+                                    <Button variant="danger"
+                                            size="lg"
+                                            onClick={() =>
+                                                this.setState({commentActive: false})}
+                                            className="cocktail-info-button mr-2">
+                                        {/*Cancel Comment*/}
+                                        <FontAwesomeIcon icon="comment-slash" />
+                                    </Button>
+                                    <Button variant="success" size="lg" className="cocktail-info-button">
+                                        <FontAwesomeIcon icon="comment-medical" />
+                                        {/*Submit*/}
+                                    </Button>
+                                </div>
+                            </Form>
+                        </div>
+                    </Col>
+                </Row>
+                }
             </Container>
         );
     }
 }
 
-export default CocktailDetails;
+export default withRouter(CocktailDetails);
