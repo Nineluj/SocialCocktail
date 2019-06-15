@@ -9,6 +9,7 @@ import UserService from "../../services/UserService";
 
 import './CocktailDetails.scss';
 import CommentsPanel from "../CommentsPanel";
+import CommentService from "../../services/CommentService";
 
 class CocktailDetails extends React.Component {
     constructor(props, context) {
@@ -16,11 +17,13 @@ class CocktailDetails extends React.Component {
         this.cocktailDBApiService = CocktailDBApiService.getInstance();
         this.cocktailService = CocktailService.getInstance();
         this.userService = UserService.getInstance();
+        this.commentService = CommentService.getInstance();
 
         this.state = {
             drink: {},
             ingredients: [],
-            commentActive: false
+            commentActive: false,
+            comments: []
         };
     }
 
@@ -50,6 +53,10 @@ class CocktailDetails extends React.Component {
 
     loadMetaData = (cocktail) => {
         console.log(cocktail.comments);
+        this.commentService.findCommentsByCocktailId(this.props.id)
+        .then(comments => this.setState({
+            comments: comments
+        }))
         // TODO show likes and comments for this cocktail
     }
 
@@ -161,8 +168,8 @@ class CocktailDetails extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={{span:10, offset: 1}}>
-                        {/*<CommentsPanel title=''*/}
-                        {/*               comments={[1, 2, 3]}/>*/}
+                        <CommentsPanel title='What Our Users are saying:'
+                                       comments={this.state.comments}/>
                     </Col>
                 </Row>
 

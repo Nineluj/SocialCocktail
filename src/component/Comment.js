@@ -18,14 +18,18 @@ const Comment = ({title, date, content, author, cocktail}) =>
         </Card.Text>
 
         <Card.Link>
+            {author !== undefined &&
             <Link to={`/profile/${author.id}`}>
                 {author.username}
             </Link>
+            }
         </Card.Link>
         <Card.Link>
+            {cocktail !== undefined &&
             <Link to={`/details/${cocktail.id}`}>
                 {cocktail.name}
             </Link>
+            }
         </Card.Link>
     </Card.Body>
 </Card>
