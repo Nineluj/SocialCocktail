@@ -6,11 +6,24 @@ import AnonymousCommentsPanel from './CommentsPanel';
 import { Container, Row, Col } from 'react-bootstrap';
 import CommentsPanel from './CommentsPanel';
 import HomeWelcomePanel from './HomeWelcomePanel';
+import CommentService from '../../services/CommentService';
 
 class Home extends React.Component {
     constructor(props) {
         super(props)
         this.userService = UserService.getInstance()
+        this.commentService = CommentService.getInstance()
+        this.state = {
+            recentComments: [],
+            followingComments: [],
+            yourComments: []
+        }
+        if (this.props.user.id === undefined) {
+            this.commentService.getRecentComments(3)
+            .then(comments => this.setState({
+                recentComments: comments
+            }))
+        }
     }
 
     render() {
@@ -27,18 +40,18 @@ class Home extends React.Component {
                         }
                         {this.props.user.id === undefined &&
                         <CommentsPanel title='Recent Comments on our Platform'
-                                    comments={[1, 2, 3]}/>
+                                    comments={this.state.recentComments}/>
                         }
                         {this.props.user.id !== undefined &&
                         <Container>
                             <Row>
                                 <Col xs={6}>
                                     <CommentsPanel title='Following'
-                                                comments={[1, 2, 3]}/>
+                                                comments={this.state.followingComments}/>
                                 </Col>
                                 <Col xs={6}>
                                     <CommentsPanel title='Your Recent Activity'
-                                                comments={[1, 2, 3]}/>
+                                                comments={this.state.yourComments}/>
                                 </Col>
                             </Row>
                         </Container>

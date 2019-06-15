@@ -1,23 +1,33 @@
 import React from 'react'
 import Card from "react-bootstrap/Card";
+import {Link} from 'react-router-dom'
 
-const Comment = () =>
+const Comment = ({title, date, content, author, cocktail}) =>
 <Card className="mx-auto">
     <Card.Body>
         <Card.Title>
-            I love Margaritas!
+            {title}
         </Card.Title>
 
         <Card.Subtitle className="mb-2 text-muted">
-            Posted on: 5/17/2020
+            {date}
         </Card.Subtitle>
 
         <Card.Text>
-            I really, really love this recipe. Exquisite.
+            {content}
         </Card.Text>
 
-        <Card.Link><a href="#"> TomVCookie </a></Card.Link>
-        <Card.Link><a href="#">Margarita</a></Card.Link>
+        {console.log(author)}
+        <Card.Link>
+            <Link to={`/profile/${author.id}`}>
+                {author.username}
+            </Link>
+        </Card.Link>
+        <Card.Link>
+            <Link to={`/details/${cocktail.id}`}>
+                {cocktail.name}
+            </Link>
+        </Card.Link>
     </Card.Body>
 </Card>
 
