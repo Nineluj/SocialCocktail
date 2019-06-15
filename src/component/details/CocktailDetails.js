@@ -161,8 +161,8 @@ class CocktailDetails extends React.Component {
                 </Row>
                 <Row>
                     <Col xs={{span:10, offset: 1}}>
-                        <CommentsPanel title=''
-                                       comments={[1, 2, 3]}/>
+                        {/*<CommentsPanel title=''*/}
+                        {/*               comments={[1, 2, 3]}/>*/}
                     </Col>
                 </Row>
 

@@ -17,7 +17,6 @@ const Comment = ({title, date, content, author, cocktail}) =>
             {content}
         </Card.Text>
 
-        {console.log(author)}
         <Card.Link>
             <Link to={`/profile/${author.id}`}>
                 {author.username}

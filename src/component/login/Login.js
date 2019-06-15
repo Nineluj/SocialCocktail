@@ -48,7 +48,6 @@ class Login extends React.Component {
                     </Col>
                 </Row>
                 }
-                {console.log('@@@', this.props.location)}
                 <h1>Sign In</h1>
                 <div className="form-group row">
                     <label for="username"
