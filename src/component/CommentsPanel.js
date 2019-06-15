@@ -11,7 +11,9 @@ const CommentsPanel = ({title, comments}) =>
                                           date={comment.created}
                                           content={comment.text}
                                           author={comment.author}
-                                          cocktail={comment.cocktail}/>)}
+                                          cocktail={comment.cocktail}
+                                          key={comment.id}
+        />)}
     </div>
 
 export default CommentsPanel

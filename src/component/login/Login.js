@@ -50,9 +50,10 @@ class Login extends React.Component {
                 }
                 <h1>Sign In</h1>
                 <div className="form-group row">
-                    <label for="username"
+                    <label htmlFor="username"
                            className="col-sm-2 col-form-label">
-                        Username </label>
+                        Username
+                    </label>
                     <div className="col-sm-10">
                         <input className="form-control"
                                id="username"
@@ -62,7 +63,7 @@ class Login extends React.Component {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label for="password"
+                    <label htmlFor="password"
                            className="col-sm-2 col-form-label">
                         Password </label>
                     <div className="col-sm-10">

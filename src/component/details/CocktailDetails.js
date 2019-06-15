@@ -97,6 +97,7 @@ class CocktailDetails extends React.Component {
     };
 
     createComment = () => {
+        console.log('###')
         this.commentService.createComment({
             text: this.state.newCommentText,
             title: this.state.newCommentTitle,

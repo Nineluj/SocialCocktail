@@ -10,16 +10,22 @@ class BaseService {
     };
 
     findAllItems = (path) =>
-        fetch(`${API_ROOT}${path}`)
+        fetch(`${API_ROOT}${path}`, {
+            credentials: 'include'
+        })
             .then(this.handleResponseForError);
 
     findById = (path) =>
-        fetch(`${API_ROOT}${path}`)
+        fetch(`${API_ROOT}${path}`, {
+            method: 'GET',
+            credentials: 'include'
+        })
             .then(this.handleResponseForError);
 
     createItem = (path, newItem) =>
         fetch(`${API_ROOT}${path}`, {
             method: 'POST',
+            credentials: 'include',
             body: JSON.stringify(newItem),
             headers: {
                 'content-type': 'application/json'
@@ -29,6 +35,7 @@ class BaseService {
     updateItem = (path, newItem) =>
         fetch(`${API_ROOT}${path}`, {
             method: 'PUT',
+            credentials: 'include',
             body: JSON.stringify(newItem),
             headers: {
                 'content-type': 'application/json'
@@ -38,6 +45,7 @@ class BaseService {
     deleteItem = (path) =>
         fetch(`${API_ROOT}${path}`, {
             method: 'DELETE',
+            credentials: 'include',
         })
 }
 

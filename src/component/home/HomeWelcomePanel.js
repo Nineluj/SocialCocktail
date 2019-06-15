@@ -6,7 +6,7 @@ const HomeWelcomePanel = ({username}) =>
         <div className="card-body">
             <h2 className="card-title">Welcome to your Homepage, {username !== undefined ? username : 'Guest User'}!</h2>
             {username !== undefined &&
-            <p className="card-text">
+            <div className="card-text">
                 <h6>
                     Below, you will find your activity feeds.
                 </h6>
@@ -18,16 +18,16 @@ const HomeWelcomePanel = ({username}) =>
                     To view your personal profile, navigate to the Profile
                     page by clicking the above link.
                 </h6>
-            </p>
+            </div>
             }
             {username === undefined &&
-            <p className="card-text">
+            <div className="card-text">
                 <h6>
                     Below, you will see recent comments. If you login, you can 
                     see comments from the people you follow, and view your most 
                     recent activity.
                 </h6>
-            </p>
+            </div>
             }
         </div>
     </Col>
