@@ -8,6 +8,7 @@ import Search from './component/search/Search';
 import Home from './component/home/Home';
 import UserService from './services/UserService'
 import CocktailDetails from './component/details/CocktailDetails';
+import HomeNavHeader from "./component/HomeNavHeader";
 
 class App extends React.Component {
     constructor(props) {
@@ -21,40 +22,41 @@ class App extends React.Component {
 
     retrieveLoggedInUser = () => {
         this.userService.getLoggedInUser()
-        .then(returnedUser => {
-            this.setState({
-            user: returnedUser
-        })});
+            .then(returnedUser => {
+                this.setState({
+                    user: returnedUser
+                })});
     };
 
     render() {
         return (
-            <Router>  
-                <Route exact path="/" 
+            <Router>
+                <HomeNavHeader user={this.state.user}/>
+                <Route exact path="/"
                        render={() => <Home user={this.state.user}/>}
                 />
-                <Route exact path="/login" 
-                       render={() => <Login user={this.state.user}  
+                <Route exact path="/login"
+                       render={() => <Login user={this.state.user}
                                             retrieveLoggedInUser={this.retrieveLoggedInUser}/>}
                 />
-                <Route exact path="/register" 
+                <Route exact path="/register"
                        render={() => <Register user={this.state.user}
                                                retrieveLoggedInUser={this.retrieveLoggedInUser}/>}
                 />
-                <Route exact path="/profile" 
+                <Route exact path="/profile"
                        render={() => <Profile user={this.state.user}/>}
                 />
-                <Route exact path="/profile/:id" 
+                <Route exact path="/profile/:id"
                        render={({match}) => <Profile id={match.params.id}
                                                      user={{}}/>}
                 />
-                <Route exact path="/search" 
+                <Route exact path="/search"
                        render={() => <Search user={this.state.user}/>}
                 />
                 <Route exact path="/details/:id"
                        render={({match}) => <CocktailDetails id={match.params.id} user={this.state.user}/>} />
 
-                <Route exact path="/search/:searchCriteria" 
+                <Route exact path="/search/:searchCriteria"
                        render={({match}) => <Search user={this.state.user}
                                                     searchCriteria={match.params.searchCriteria}/>}
                 />

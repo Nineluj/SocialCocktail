@@ -1,6 +1,7 @@
 import React from 'react'
 import UserService from '../../services/UserService'
 import {Link, Redirect} from "react-router-dom";
+import {Container} from "react-bootstrap";
 
 class Register extends React.Component {
     constructor(props) {
@@ -40,7 +41,7 @@ class Register extends React.Component {
         }
 
         return (
-            <div className="container">
+            <Container className="mt-3">
             <h1>Sign Up</h1>
                 <div className="form-group row">
                     <label for="username"
@@ -121,7 +122,7 @@ class Register extends React.Component {
                         </div>
                     </div>
                 </div>
-        </div>
+        </Container>
         )
     }
 }

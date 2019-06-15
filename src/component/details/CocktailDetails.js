@@ -8,6 +8,7 @@ import CocktailService from "../../services/CocktailService";
 import UserService from "../../services/UserService";
 
 import './CocktailDetails.scss';
+import CommentsPanel from "../CommentsPanel";
 
 class CocktailDetails extends React.Component {
     constructor(props, context) {
@@ -152,9 +153,19 @@ class CocktailDetails extends React.Component {
 
                 <Row className="mt-4">
                     <Col xs={{span: 12}}>
-                        <h4 className="cocktail-discussion-title"><FontAwesomeIcon icon="comments" size="lg" className="mr-2"/> What other users are saying</h4>
+                        <h4 className="cocktail-discussion-title">
+                            <FontAwesomeIcon icon="comments" size="lg" className="mr-2"/>
+                            What other users are saying
+                        </h4>
                     </Col>
                 </Row>
+                <Row>
+                    <Col xs={{span:10, offset: 1}}>
+                        <CommentsPanel title=''
+                                       comments={[1, 2, 3]}/>
+                    </Col>
+                </Row>
+
                 {!this.state.commentActive &&
                 <Row className="mt-3">
                     <Col xs={12} className="text-center">
@@ -192,12 +203,14 @@ class CocktailDetails extends React.Component {
                                             onClick={() =>
                                                 this.setState({commentActive: false})}
                                             className="cocktail-info-button mr-2">
-                                        {/*Cancel Comment*/}
                                         <FontAwesomeIcon icon="comment-slash" />
                                     </Button>
-                                    <Button variant="success" size="lg" className="cocktail-info-button">
+                                    <Button variant="success"
+                                            size="lg"
+                                            className="cocktail-info-button"
+                                            onClick={() => alert('Submit comment now')}
+                                    >
                                         <FontAwesomeIcon icon="comment-medical" />
-                                        {/*Submit*/}
                                     </Button>
                                 </div>
                             </Form>

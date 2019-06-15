@@ -37,7 +37,7 @@ class Login extends React.Component {
             )
         }
         return (
-            <Container>
+            <Container className="mt-3">
                 {this.props.location.state !== undefined &&
                 <Row>
                     <Col xs={12}>

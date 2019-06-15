@@ -1,10 +1,10 @@
 import React from 'react'
 import UserService from '../../services/UserService'
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import HomeNavHeader from './HomeNavHeader';
-import AnonymousCommentsPanel from './CommentsPanel';
+import HomeNavHeader from '../HomeNavHeader';
+import AnonymousCommentsPanel from '../CommentsPanel';
 import { Container, Row, Col } from 'react-bootstrap';
-import CommentsPanel from './CommentsPanel';
+import CommentsPanel from '../CommentsPanel';
 import HomeWelcomePanel from './HomeWelcomePanel';
 
 class Home extends React.Component {
@@ -15,8 +15,8 @@ class Home extends React.Component {
 
     render() {
         return (
-            <Container>
-                <HomeNavHeader user={this.props.user}/>
+            <Container className="mt-3">
+                {/*<HomeNavHeader user={this.props.user}/>*/}
                 <Container>
                     <Row>
                         <HomeWelcomePanel username={this.props.user.username}/>

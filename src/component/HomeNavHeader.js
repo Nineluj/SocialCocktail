@@ -2,12 +2,14 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { LinkContainer } from "react-router-bootstrap";
 import { Navbar, Nav, NavItem, Form, FormControl, Button } from 'react-bootstrap'
-import UserService from '../../services/UserService';
+import UserService from '../services/UserService';
+import './NavHeader.scss';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 let userService = UserService.getInstance()
 
 const HomeNavHeader = ({user}) =>
-    <Navbar expand="lg">
+    <Navbar expand="lg" className="main-navbar">
         <Navbar.Brand as={Link} to="/">
             <h1>
                 Social Cocktail
@@ -42,6 +44,12 @@ const HomeNavHeader = ({user}) =>
                                 <h4>Logout</h4>
                 </Nav.Link>
             </NavItem>}
+            <NavItem pullRight>
+                <Nav.Link as={Link} to="/profile">
+                    <FontAwesomeIcon icon="user" size="lg" className="align-middle"/>
+                </Nav.Link>
+            </NavItem>
+
             </Nav>
         </Navbar.Collapse>
     </Navbar>

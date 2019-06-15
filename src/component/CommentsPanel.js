@@ -1,5 +1,5 @@
 import React from 'react'
-import Comment from '../comment/Comment';
+import Comment from './Comment';
 
 const CommentsPanel = ({title, comments}) =>
     <div>
