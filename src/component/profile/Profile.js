@@ -45,7 +45,7 @@ class Profile extends React.Component {
         }
         else if (!this.state.isPublic) {
             return (
-                <div className="container">
+                <div className="container mt-3">
                     <h1>Profile</h1>
                     <form>
                         <div className="form-group row">

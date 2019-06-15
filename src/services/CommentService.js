@@ -15,9 +15,7 @@ export default class CommentService extends BaseService {
         return CommentService.myInstance
     }
 
-    getRecentComments = (numPosts) => {
-        return fetch(this.getRecentCommentsUrl.replace('NUM_POSTS', numPosts))
-        .then(response => response.json())
-    }
+    getRecentComments = numPosts => this.findAllItems(`/comments/recent/${numPosts}`);
 
+    createNewComment = (comment, cocktailId) => this.createItem(`/cocktail/${cocktailId}/comments`, comment);
 }

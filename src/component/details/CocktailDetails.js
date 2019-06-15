@@ -9,6 +9,7 @@ import UserService from "../../services/UserService";
 
 import './CocktailDetails.scss';
 import CommentsPanel from "../CommentsPanel";
+import CommentService from "../../services/CommentService";
 
 class CocktailDetails extends React.Component {
     constructor(props, context) {
@@ -16,11 +17,14 @@ class CocktailDetails extends React.Component {
         this.cocktailDBApiService = CocktailDBApiService.getInstance();
         this.cocktailService = CocktailService.getInstance();
         this.userService = UserService.getInstance();
+        this.commentService = CommentService.getInstance();
 
         this.state = {
             drink: {},
             ingredients: [],
-            commentActive: false
+            commentActive: false,
+            newCommentTitle: '',
+            newCommentText: ''
         };
     }
 
@@ -81,6 +85,22 @@ class CocktailDetails extends React.Component {
         });
     };
 
+    changeCommentText = (event) => {
+        this.setState({ newCommentText: event.target.value });
+    };
+
+    changeCommentTitle = (event) => {
+        this.setState({ newCommentTitle: event.target.value });
+    };
+
+    createComment = () => {
+        this.commentService.createComment({
+            text: this.state.newCommentText,
+            title: this.state.newCommentTitle,
+            created: new Date()
+        }, this.props.id);
+    };
+
     render() {
         let { drink } = this.state;
 
@@ -132,17 +152,16 @@ class CocktailDetails extends React.Component {
 
                             { this.state.likedBy
                                 ?
-                            <React.Fragment>
+                                <React.Fragment>
                                 <span className="mr-2">
                                     Liked by these users:
                                 </span>
-
-                                { this.state.likedBy.map(user =>
-                                    <Badge pill variant="secondary">
-                                        {user.firstName + " " + user.lastName}
-                                    </Badge>)
-                                }
-                            </React.Fragment>
+                                    { this.state.likedBy.map(user =>
+                                        <Badge pill variant="secondary">
+                                            {user.firstName + " " + user.lastName}
+                                        </Badge>)
+                                    }
+                                </React.Fragment>
                                 :
                                 <span>No one has liked this drink yet, be the first!</span>
                             }
@@ -195,7 +214,14 @@ class CocktailDetails extends React.Component {
                             <Form>
                                 <Form.Group controlId="exampleForm.ControlTextarea1">
                                     <Form.Label>Comment</Form.Label>
-                                    <Form.Control as="textarea" rows="3" />
+                                    <Form.Control value={this.state.newCommentTitle}
+                                                  onChange={this.changeCommentTitle}
+                                    />
+                                    <Form.Control as="textarea"
+                                                  rows="3"
+                                                  value={this.state.newCommentText}
+                                                  onChange={this.changeCommentText}
+                                    />
                                 </Form.Group>
                                 <div className="text-center">
                                     <Button variant="danger"
@@ -208,8 +234,7 @@ class CocktailDetails extends React.Component {
                                     <Button variant="success"
                                             size="lg"
                                             className="cocktail-info-button"
-                                            onClick={() => alert('Submit comment now')}
-                                    >
+                                            onClick={this.createComment}>
                                         <FontAwesomeIcon icon="comment-medical" />
                                     </Button>
                                 </div>
