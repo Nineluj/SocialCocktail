@@ -10,7 +10,7 @@ const Comment = ({title, date, content, author, cocktail}) =>
         </Card.Title>
 
         <Card.Subtitle className="mb-2 text-muted">
-            {date}
+            {date.slice(0, 10)}
         </Card.Subtitle>
 
         <Card.Text>

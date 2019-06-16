@@ -1,7 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { LinkContainer } from "react-router-bootstrap";
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap'
+import {Link} from 'react-router-dom'
+import {Nav, Navbar} from 'react-bootstrap'
 import UserService from '../services/UserService';
 import './NavHeader.scss';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

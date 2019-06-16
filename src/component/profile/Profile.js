@@ -1,6 +1,6 @@
 import React from 'react'
 import UserService from '../../services/UserService';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 class Profile extends React.Component {
     constructor(props) {
@@ -32,7 +32,9 @@ class Profile extends React.Component {
       if (props.user.username !== state.user.username &&
           !state.isPublic) {
         return {user: props.user}
-      }  
+      } else {
+          return state;
+      }
     }
 
     render() {
@@ -49,22 +51,19 @@ class Profile extends React.Component {
                     <h1>Profile</h1>
                     <form>
                         <div className="form-group row">
-                            <label for="username"
+                            <label htmlFor="username"
                                 className="col-sm-2 col-form-label">
                                 Username </label>
                             <div className="col-sm-10">
                                 <input className="form-control"
                                     id="username"
                                     placeholder="Alice"
-                                    readonly="true"
-                                    onChange={(event) => this.setState({
-                                        username: event.target.value
-                                    })}
+                                    readOnly
                                     value={this.state.user.username}/>
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label for="phone"
+                            <label htmlFor="phone"
                                 className="col-sm-2 col-form-label">
                                 Phone </label>
                             <div className="col-sm-10">
@@ -79,7 +78,7 @@ class Profile extends React.Component {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label for="email"
+                            <label htmlFor="email"
                                 className="col-sm-2 col-form-label">
                                 Email </label>
                             <div className="col-sm-10">
@@ -94,9 +93,10 @@ class Profile extends React.Component {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label for="role"
+                            <label htmlFor="role"
                                 className="col-sm-2 col-form-label">
-                                Role </label>
+                                Role
+                            </label>
                             <div className="col-sm-10">
                                 <select className="form-control"
                                         id="role"
@@ -133,28 +133,25 @@ class Profile extends React.Component {
                         <h1>Profile</h1>
                         <form>
                             <div className="form-group row">
-                                <label for="username"
+                                <label htmlFor="username"
                                     className="col-sm-2 col-form-label">
                                     Username </label>
                                 <div className="col-sm-10">
                                     <input className="form-control"
                                         id="username"
                                         placeholder="Alice"
-                                        readonly="true"
-                                        onChange={(event) => this.setState({
-                                            username: event.target.value
-                                        })}
+                                        readOnly
                                         value={this.state.user.username}/>
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <label for="role"
+                                <label htmlFor="role"
                                     className="col-sm-2 col-form-label">
                                     Role </label>
                                 <div className="col-sm-10">
                                     <select className="form-control"
                                             id="role"
-                                            disabled="true"
+                                            disabled={true}
                                             onChange={(event) => this.setState({
                                                 role: event.target.value
                                             })}

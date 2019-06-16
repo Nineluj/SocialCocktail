@@ -1,24 +1,25 @@
 import React from 'react'
-import {Container, Row, Col, Form} from 'react-bootstrap';
+import {Col, Container, Form, Row} from 'react-bootstrap';
 import CocktailItem from './CocktailItem';
 import Image from "react-bootstrap/Image";
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import CocktailDBApiService from '../../services/CocktailDBApiService';
-import { Redirect } from 'react-router'
+import {Redirect} from 'react-router'
 
 class Search extends React.Component {
     constructor(props) {
-        console.log("Constructing search")
         super(props);
+        this.isComponentMounted = true;
         this.cocktailDBApiService = CocktailDBApiService.getInstance()
 
         if (this.props.searchCriteria !== undefined) {
             this.state = {
                 cocktailSearchText: this.props.searchCriteria,
                 shownCocktails: [],
-                rerouteActive: false
+                rerouteActive: false,
+                isComponentMounted: true
             }
-            this.searchCocktail()
+            this.searchCocktail();
         }
         else {
             this.state = {
@@ -27,6 +28,14 @@ class Search extends React.Component {
                 rerouteActive: false
             }
         }
+    }
+
+    componentWillMount() {
+        this.isComponentMounted = true;
+    }
+
+    componentWillUnmount() {
+        this.isComponentMounted = false;
     }
 
     updateResults = (results) => {
@@ -38,7 +47,7 @@ class Search extends React.Component {
 
     searchCocktail = () => {
         this.cocktailDBApiService.searchCocktail(this.state.cocktailSearchText)
-            .then(cocktails => this.updateResults(cocktails))
+            .then(cocktails => this.isComponentMounted && this.updateResults(cocktails))
     };
 
     render() {

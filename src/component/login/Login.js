@@ -1,9 +1,8 @@
 import React from 'react'
 import UserService from '../../services/UserService'
-import { Redirect } from 'react-router'
-import { Link } from "react-router-dom";
-import { Container, Row, Col, Alert } from "react-bootstrap";
-import { withRouter } from "react-router";
+import {Redirect, withRouter} from 'react-router'
+import {Link} from "react-router-dom";
+import {Alert, Col, Container, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class Login extends React.Component {

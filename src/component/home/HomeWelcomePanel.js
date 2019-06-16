@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col } from 'react-bootstrap';
+import {Col} from 'react-bootstrap';
 
 const HomeWelcomePanel = ({username}) => 
     <Col xs={12} className="card mb-3">

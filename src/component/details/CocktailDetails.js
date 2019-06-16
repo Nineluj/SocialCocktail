@@ -1,6 +1,6 @@
 import React from "react";
-import {Container, Button, Form, Col, Row, Badge} from "react-bootstrap";
-import {Redirect, withRouter} from 'react-router'
+import {Badge, Button, Col, Container, Form, Row} from "react-bootstrap";
+import {withRouter} from 'react-router'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";
 
 import CocktailDBApiService from "../../services/CocktailDBApiService";
@@ -102,7 +102,14 @@ class CocktailDetails extends React.Component {
             text: this.state.newCommentText,
             title: this.state.newCommentTitle,
             created: new Date()
-        }, this.props.id);
+        }, this.props.id).then(comment => {
+            this.setState(prevState => ({
+                comments: prevState.comments.concat([comment]),
+                commentActive: false,
+                newCommentTitle: '',
+                newCommentText: '',
+            }))
+        });
     };
 
     render() {
@@ -213,7 +220,7 @@ class CocktailDetails extends React.Component {
                 }
                 {this.state.commentActive &&
                 <Row>
-                    <Col xs={{span: 8, offset: 2}}>
+                    <Col xs={{span: 8, offset: 2}} className="mt-5">
                         <div>
                             <Form>
                                 <Form.Group controlId="exampleForm.ControlTextarea1">

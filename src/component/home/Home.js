@@ -1,10 +1,7 @@
 import React from 'react'
 import UserService from '../../services/UserService'
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
-import HomeNavHeader from '../HomeNavHeader';
-import AnonymousCommentsPanel from '../CommentsPanel';
-import { Container, Row, Col } from 'react-bootstrap';
 import CommentsPanel from '../CommentsPanel';
+import {Col, Container, Row} from 'react-bootstrap';
 import HomeWelcomePanel from './HomeWelcomePanel';
 import CommentService from '../../services/CommentService';
 

@@ -5,8 +5,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas, faFile } from '@fortawesome/free-solid-svg-icons'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faFile, fas} from '@fortawesome/free-solid-svg-icons'
 
 library.add(fas, faFile);
 

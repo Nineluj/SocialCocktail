@@ -44,7 +44,7 @@ class Register extends React.Component {
             <Container className="mt-3">
             <h1>Sign Up</h1>
                 <div className="form-group row">
-                    <label for="username"
+                    <label htmlFor="username"
                            className="col-sm-2 col-form-label">
                         Username </label>
                     <div className="col-sm-10">
@@ -56,7 +56,7 @@ class Register extends React.Component {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label for="password"
+                    <label htmlFor="password"
                            className="col-sm-2 col-form-label">
                         Password </label>
                     <div className="col-sm-10">
@@ -69,7 +69,7 @@ class Register extends React.Component {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label for="verify"
+                    <label htmlFor="verify"
                             className="col-sm-2 col-form-label">
                         Verify Password </label>
                     <div className="col-sm-10">
@@ -82,7 +82,7 @@ class Register extends React.Component {
                     </div>
                 </div>
                 <div className="form-group row">
-                    <label for="role"
+                    <label htmlFor="role"
                             className="col-sm-2 col-form-label">
                             Role </label>
                     <select className="form-control col-sm-10"
