@@ -1,7 +1,9 @@
 import React from "react";
 import {Badge, Button, Col, Container, Form, Row} from "react-bootstrap";
 import {withRouter} from 'react-router'
+import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";
+
 
 import CocktailDBApiService from "../../services/CocktailDBApiService";
 import CocktailService from "../../services/CocktailService";
@@ -25,7 +27,8 @@ class CocktailDetails extends React.Component {
             commentActive: false,
             newCommentTitle: '',
             newCommentText: '',
-            comments: []
+            comments: [],
+            usersLikedBy: []
         };
     }
 
@@ -53,11 +56,10 @@ class CocktailDetails extends React.Component {
     };
 
     loadMetaData = (cocktail) => {
-        this.commentService.findCommentsByCocktailId(this.props.id)
-        .then(comments => this.setState({
-            comments: comments
-        }))
-        // TODO show likes and comments for this cocktail
+        this.setState({
+            comments: cocktail.comments,
+            usersLikedBy: cocktail.usersLikedBy
+        })
     }
 
     collectIngredients = () => {
@@ -97,7 +99,6 @@ class CocktailDetails extends React.Component {
     };
 
     createComment = () => {
-        console.log('###')
         this.commentService.createComment({
             text: this.state.newCommentText,
             title: this.state.newCommentTitle,
@@ -116,23 +117,26 @@ class CocktailDetails extends React.Component {
         let { drink } = this.state;
 
         return (
-            <Container fluid>
+            <Container fluid className="cocktail-details">
                 <Row>
                     <Col xs={{span: 5, offset: 1}}>
-                        <h1 className="my-4">
+                        <h1 className="cocktail-details-title my-4">
                             {drink.strDrink}
                             <Button variant="success" className="mr-2 ml-2" onClick={() => {
                                 if (this.props.user.id !== undefined) {
-                                    this.userService.addLikedCocktail(this.props.id)
-                                }
-                                else {
+                                    this.cocktailService.likeCocktail(this.props.id)
+                                        .then(this.setState(prevState => {
+                                            if (prevState.usersLikedBy.findIndex(user => user.id === this.props.user.id) === -1) {
+                                                return {usersLikedBy: prevState.usersLikedBy.concat(this.props.user)}
+                                            } else {
+                                                return prevState;
+                                            }}))
+                                } else {
                                     this.navigateToLogin("a like");
                                 }}}>
                                 <FontAwesomeIcon icon="thumbs-up" size="lg"/>
                             </Button>
-
                         </h1>
-
                     </Col>
                 </Row>
 
@@ -161,16 +165,18 @@ class CocktailDetails extends React.Component {
                     <Col xs={{span: 10, offset: 1}} className="pt-4 pb-4 cocktail-likers">
                         <h4>
 
-                            { this.state.likedBy
+                            { this.state.usersLikedBy !== undefined && this.state.usersLikedBy.length > 0
                                 ?
                                 <React.Fragment>
                                 <span className="mr-2">
                                     Liked by these users:
                                 </span>
-                                    { this.state.likedBy.map(user =>
+                                    { this.state.usersLikedBy.map(user =>
+                                        <Link to={`/profile/${user.id}`}>
                                         <Badge pill variant="secondary">
-                                            {user.firstName + " " + user.lastName}
-                                        </Badge>)
+                                            {user.username}
+                                        </Badge>
+                                        </Link>)
                                     }
                                 </React.Fragment>
                                 :
@@ -192,6 +198,7 @@ class CocktailDetails extends React.Component {
                 <Row>
                     <Col xs={{span:10, offset: 1}}>
                         <CommentsPanel title=''
+                                       hideCocktailLink
                                        comments={this.state.comments}/>
                     </Col>
                 </Row>

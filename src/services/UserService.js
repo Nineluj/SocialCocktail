@@ -82,10 +82,10 @@ export default class UserService {
         }).then(response => response.json())
     }
 
-    addLikedCocktail = (id) => {
-        return fetch(this.addLikedCocktailUrl.replace('COCKTAIL_ID', id), {
-            method: 'POST',
-            credentials: 'include'
-        })
-    }
+    // addLikedCocktail = (id) => {
+    //     return fetch(this.addLikedCocktailUrl.replace('COCKTAIL_ID', id), {
+    //         method: 'POST',
+    //         credentials: 'include'
+    //     })
+    // }
 }

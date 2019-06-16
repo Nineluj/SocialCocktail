@@ -1,13 +1,13 @@
 @import 'Colors';
 
 .demo {
-  background: $dark-grey;
+  background: darkslategray;
   height:100vh;
   padding: 10px 0;
 
   .demo-main-div {
-    background: $light-blue;
-    color: white;
+    background: lightgrey;
+    color: darkslategrey;
     padding-top: 20px;
     margin: 0 auto;
     border-radius: 10px;

@@ -46,7 +46,13 @@ class BaseService {
         fetch(`${API_ROOT}${path}`, {
             method: 'DELETE',
             credentials: 'include',
-        })
+        });
+
+    postNoResponse = (path) =>
+        fetch(`${API_ROOT}${path}`, {
+            method: 'POST',
+            credentials: 'include',
+        });
 }
 
 export default BaseService;

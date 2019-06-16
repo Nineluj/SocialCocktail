@@ -28,4 +28,8 @@ export default class CocktailService extends BaseService {
     }
 
     findCocktailById = id => this.findById(`/cocktails/${id}`);
+
+    findUserLikes = id => this.findById(`/cocktails/${id}/likes`);
+
+    likeCocktail = id => this.postNoResponse(`/cocktails/${id}/likes`);
 }

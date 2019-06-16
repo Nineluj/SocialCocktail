@@ -64,7 +64,7 @@ class Search extends React.Component {
                     <Row>
                         <Col xs={12}>
                             <Image className="demo-main-image" src={require("./SocialCocktail.svg")}/>
-                            <h2 className="demo-main-title">SocialCocktail DEMO</h2>
+                            <h2 className="demo-main-title">Cocktail Search</h2>
                         </Col>
                     </Row>
                     <Row>

@@ -5,6 +5,9 @@
 .cocktail-info-scrollable {
   height: 400px;
   overflow-y: scroll;
+  background: white;
+  border-radius: 10px;
+  padding-top: 10px;
 }
 
 .cocktail-discussion-title {
@@ -21,4 +24,12 @@ textarea {
 .cocktail-likers {
   border-radius: 15px;
   background-color: darkgrey;
+}
+
+.cocktail-details {
+  background: darkslategray;
+}
+
+.cocktail-details-title {
+  color: white;
 }

@@ -2,8 +2,9 @@ import React from 'react'
 import Card from "react-bootstrap/Card";
 import {Link} from 'react-router-dom'
 
-const Comment = ({title, date, content, author, cocktail}) =>
+const Comment = ({title, date, content, author, cocktail, hideCocktailLink}) =>
 <Card className="mx-auto">
+    {console.log('***', cocktail)}
     <Card.Body>
         <Card.Title>
             {title}
@@ -20,9 +21,11 @@ const Comment = ({title, date, content, author, cocktail}) =>
         <Card.Link as={Link} to={`/profile/${author.id}`}>
                 {author.username}
         </Card.Link>
+        {!hideCocktailLink &&
         <Card.Link as={Link} to={`/details/${cocktail.id}`}>
-                {cocktail.name}
+            {cocktail.name}
         </Card.Link>
+        }
     </Card.Body>
 </Card>
 
