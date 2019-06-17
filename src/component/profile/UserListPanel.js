@@ -23,7 +23,8 @@ const UserListPanel = ({title, users, following, loggedInId, getLoggedInFollowin
                                 </h4>
                             </Link>
                             {(!following.map(followUser => followUser.id).includes(user.id) &&
-                                user.id !== loggedInId) &&
+                                user.id !== loggedInId &&
+                                loggedInId !== undefined) &&
                             <Button onClick={() => userService.addFollowing(user.id)
                                                     .then(following => getLoggedInFollowing())
                                             }>
