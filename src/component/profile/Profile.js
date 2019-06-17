@@ -22,6 +22,16 @@ class Profile extends React.Component {
                 this.setState({
                 user: user
             })})
+
+            this.userService.getFollowersById(this.props.id)
+            .then(followers => this.setState({
+                followers: followers
+            }))
+    
+            this.userService.getFollowingById(this.props.id)
+            .then(following => this.setState({
+                following: following
+            }))
         }
         else {
             this.state = {
