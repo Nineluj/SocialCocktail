@@ -2,7 +2,7 @@ import React from 'react'
 import UserService from '../../services/UserService';
 import {Link} from 'react-router-dom'
 import UserListPanel from './UserListPanel';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button, Container } from 'react-bootstrap';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -16,9 +16,11 @@ class Profile extends React.Component {
                 user: {},
                 userId: this.props.id,
                 followers: [],
-                following: []
+                following: [],
+                loggedInFollowing: []
             }
             this.retrieveAllPublicUserData()
+            this.getLoggedInFollowing()
         }
         else {
             this.state = {
@@ -26,9 +28,11 @@ class Profile extends React.Component {
                 user: this.props.user,
                 userId: this.props.user.id,
                 followers: [],
-                following: []
+                following: [],
+                loggedInFollowing: []
             }
             this.retrieveAllPrivateUserData()
+            this.getLoggedInFollowing()
         }
     }
 
@@ -69,6 +73,13 @@ class Profile extends React.Component {
         this.userService.getFollowing()
         .then(following => this.setState({
             following: following
+        }))
+    }
+    
+    getLoggedInFollowing = () => {
+        this.userService.getFollowing()
+        .then(following => this.setState({
+            loggedInFollowing: following
         }))
     }
 
@@ -168,21 +179,44 @@ class Profile extends React.Component {
                     </form>
                     <Row>
                         <Col xs={6}>
-                            <UserListPanel title='Following' users={this.state.following}/>
+                            <UserListPanel title='Following' 
+                                           users={this.state.following} 
+                                           following={this.state.loggedInFollowing}
+                                           loggedInId={this.props.user.id}
+                                           getLoggedInFollowing={this.getLoggedInFollowing}/>
                         </Col>
                         <Col xs={6}>
-                            <UserListPanel title='Followers' users={this.state.followers}/>
+                            <UserListPanel title='Followers' 
+                                           users={this.state.followers} 
+                                           following={this.state.loggedInFollowing}
+                                           loggedInId={this.props.user.id}
+                                           getLoggedInFollowing={this.getLoggedInFollowing}/>
                         </Col>
                     </Row>
                 </div>
             )
         }
         else {
-            console.log('We are now rendering with this state: ', this.state)
-            console.log(this.props.id)
             return (
                 <div className="container">
-                        <h1>Profile</h1>
+                        <Row>
+                            <h1>Profile</h1>
+                            {(!this.state.loggedInFollowing.map(followUser => followUser.id.toString()).includes(this.state.userId) &&
+                              this.props.user !== undefined && 
+                              this.props.user.id !== undefined &&
+                              this.props.user.id.toString() !== this.state.userId)
+                             &&
+                            <Button onClick={() => this.userService.addFollowing(this.state.userId)
+                                                    .then(loggedInFollowing => {
+                                                        this.setState({
+                                                            loggedInFollowing: loggedInFollowing
+                                                        })
+                                                        this.retrieveAllPublicUserData()
+                                                    })
+                                            }>
+                                Follow
+                            </Button>}
+                        </Row>
                         <form>
                             <div className="form-group row">
                                 <label htmlFor="username"
@@ -219,10 +253,18 @@ class Profile extends React.Component {
                         </form>
                         <Row>
                             <Col xs={6}>
-                                <UserListPanel title='Following' users={this.state.following}/>
+                                <UserListPanel title='Following' 
+                                            users={this.state.following} 
+                                            following={this.state.loggedInFollowing}
+                                            loggedInId={this.props.user.id}
+                                            getLoggedInFollowing={this.getLoggedInFollowing}/>
                             </Col>
                             <Col xs={6}>
-                                <UserListPanel title='Followers' users={this.state.followers}/>
+                                <UserListPanel title='Followers' 
+                                            users={this.state.followers} 
+                                            following={this.state.loggedInFollowing}
+                                            loggedInId={this.props.user.id}
+                                            getLoggedInFollowing={this.getLoggedInFollowing}/>
                             </Col>
                         </Row>
                     </div>
