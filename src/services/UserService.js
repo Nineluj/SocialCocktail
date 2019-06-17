@@ -11,6 +11,9 @@ export default class UserService {
         this.updateUserUrl = '//' + this.pathHost + '/api/user'
         this.findUserByIdUrl = '//' + this.pathHost + '/api/users/USER_ID'
         this.addLikedCocktailUrl = '//' + this.pathHost + '/api/user/likes/cocktail/COCKTAIL_ID'
+        this.getFollowingUrl = '//' + this.pathHost + '/api/user/following'
+        this.getFollowersUrl = '//' + this.pathHost + '/api/user/followers'
+        this.addFollowingUrl = '//' + this.pathHost + '/api/user/following'
     }
 
     static myInstance = null;    
@@ -77,6 +80,20 @@ export default class UserService {
 
     findUserById = (id) => {
         return fetch(this.findUserByIdUrl.replace('USER_ID', id), {
+            method: 'GET',
+            credentials: 'include'
+        }).then(response => response.json())
+    }
+
+    getFollowers = () => {
+        return fetch(this.getFollowersUrl, {
+            method: 'GET',
+            credentials: 'include'
+        }).then(response => response.json())
+    }
+
+    getFollowing = () => {
+        return fetch(this.getFollowingUrl, {
             method: 'GET',
             credentials: 'include'
         }).then(response => response.json())

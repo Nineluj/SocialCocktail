@@ -1,6 +1,7 @@
 import React from 'react'
 import UserService from '../../services/UserService';
 import {Link} from 'react-router-dom'
+import UserListPanel from './UserListPanel';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -11,7 +12,9 @@ class Profile extends React.Component {
         if (this.props.id !== undefined) {
             this.state = {
                 isPublic: true,
-                user: {}
+                user: {},
+                followers: [],
+                following: []
             }
             this.userService.findUserById(this.props.id)
             .then(user => {
@@ -23,8 +26,19 @@ class Profile extends React.Component {
         else {
             this.state = {
                 isPublic: false,
-                user: this.props.user
+                user: this.props.user,
+                followers: [],
+                following: []
             }
+            this.userService.getFollowers()
+            .then(followers => this.setState({
+                followers: followers
+            }))
+    
+            this.userService.getFollowing()
+            .then(following => this.setState({
+                following: following
+            }))
         }
     }
 
@@ -123,6 +137,8 @@ class Profile extends React.Component {
                             </div>
                         </div>
                     </form>
+                    <UserListPanel title='Following' users={this.state.following}/>
+                    <UserListPanel title='Followers' users={this.state.followers}/>
                 </div>
             )
         }
@@ -165,6 +181,8 @@ class Profile extends React.Component {
                                 <label className="col-sm-2 col-form-label"></label>
                             </div>
                         </form>
+                        <UserListPanel title='Following' users={this.state.following}/>
+                        <UserListPanel title='Followers' users={this.state.followers}/>
                     </div>
             )
         }
