@@ -155,7 +155,7 @@ class CocktailDetails extends React.Component {
                         <h5>
                             Ingredients:
                             <ul>
-                                {this.state.ingredients.map((ingr, index) => <li key={index}>{ingr}</li>)}
+                                {this.state.ingredients.filter(ingr => ingr !== 'null null').map((ingr, index) => <li key={index}>{ingr}</li>)}
                             </ul>
                         </h5>
                         <p>
