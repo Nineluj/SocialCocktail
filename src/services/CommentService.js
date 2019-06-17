@@ -5,6 +5,8 @@ export default class CommentService extends BaseService {
         super();
         this.pathHost = window.location.hostname === 'localhost' ? 'localhost:8080' : '';
         this.getRecentCommentsUrl = '//' + this.pathHost + '/api/comments/recent/NUM_POSTS'
+        this.getFollowingCommentsUrl = '//' + this.pathHost + '/api/comments/following/NUM_POSTS'
+        this.getCommentsUrl = '//' + this.pathHost + '/api/comments/NUM_POSTS'
         this.findCommentsByCocktailIdUrl = '//' + this.pathHost + '/api/cocktail/COCKTAIL_ID/comments'
     }
 
@@ -17,6 +19,10 @@ export default class CommentService extends BaseService {
     }
 
     getRecentComments = numPosts => this.findAllItems(`/comments/recent/${numPosts}`);
+
+    getFollowingComments = numPosts => this.findAllItems(`/comments/following/${numPosts}`);
+
+    getComments = numPosts => this.findAllItems(`/comments/${numPosts}`);
 
     createComment = (comment, cocktailId) => this.createItem(`/cocktail/${cocktailId}/comments`, comment);
 

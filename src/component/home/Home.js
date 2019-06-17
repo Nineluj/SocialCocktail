@@ -16,16 +16,41 @@ class Home extends React.Component {
             yourComments: []
         }
         if (this.props.user.id === undefined) {
+            console.log('yeet')
             this.commentService.getRecentComments(3)
             .then(comments => this.setState({
                 recentComments: comments
             }))
         }
+        else {
+            console.log('FAITH')
+            this.commentService.getFollowingComments(3)
+            .then(comments => this.setState({
+                followingComments: comments
+            }))
+            this.commentService.getComments(3)
+            .then(comments => this.setState({
+                yourComments: comments
+            })) 
+        }
+    }
+
+    // Needed for logged in homepage to populate on instantiation and refresh
+    componentDidMount() {
+        this.commentService.getFollowingComments(3)
+        .then(comments => this.setState({
+            followingComments: comments
+        }))
+        this.commentService.getComments(3)
+        .then(comments => this.setState({
+            yourComments: comments
+        })) 
     }
 
     render() {
         return (
-            <Container className="mt-3">
+            <Container fluid className='demo'>
+            <Container fluid className="mt-3 home-main-div">
                 {/*<HomeNavHeader user={this.props.user}/>*/}
                 <Container>
                     <Row>
@@ -55,6 +80,7 @@ class Home extends React.Component {
                         }
                     </Row>
                 </Container>
+            </Container>
             </Container>
         )
     }

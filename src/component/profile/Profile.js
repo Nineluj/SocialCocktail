@@ -211,7 +211,7 @@ class Profile extends React.Component {
                                                         this.setState({
                                                             loggedInFollowing: loggedInFollowing
                                                         })
-                                                        this.retrieveAllPublicUserData()
+                                                        //this.retrieveAllPublicUserData()
                                                     })
                                             }>
                                 Follow

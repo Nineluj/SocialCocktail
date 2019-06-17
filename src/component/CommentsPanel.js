@@ -7,7 +7,8 @@ const CommentsPanel = (props) =>
         {// Here, hit API endpoint to get most recent
             //  comments, and .map(comment => <Comment/>)
         }
-        {props.comments.map(comment => <Comment title={comment.title}
+        {props.comments !== undefined &&
+         props.comments.map(comment => <Comment title={comment.title}
                                                 date={comment.created}
                                                 content={comment.text}
                                                 author={comment.author}
