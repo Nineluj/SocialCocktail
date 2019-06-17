@@ -56,6 +56,7 @@ class CocktailDetails extends React.Component {
     };
 
     loadMetaData = (cocktail) => {
+        console.log(cocktail)
         this.setState({
             comments: cocktail.comments,
             usersLikedBy: cocktail.usersLikedBy
@@ -104,8 +105,9 @@ class CocktailDetails extends React.Component {
             title: this.state.newCommentTitle,
             created: new Date()
         }, this.props.id).then(comment => {
-            this.setState(prevState => ({
-                comments: prevState.comments.concat([comment]),
+            console.log(comment)
+            this.setState(({
+                comments: this.state.comments.concat([comment]),
                 commentActive: false,
                 newCommentTitle: '',
                 newCommentText: '',
