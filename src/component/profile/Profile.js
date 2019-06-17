@@ -2,6 +2,7 @@ import React from 'react'
 import UserService from '../../services/UserService';
 import {Link} from 'react-router-dom'
 import UserListPanel from './UserListPanel';
+import { Row, Col } from 'react-bootstrap';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -13,42 +14,21 @@ class Profile extends React.Component {
             this.state = {
                 isPublic: true,
                 user: {},
+                userId: this.props.id,
                 followers: [],
                 following: []
             }
-            this.userService.findUserById(this.props.id)
-            .then(user => {
-                console.log('retrieved user by id', user)
-                this.setState({
-                user: user
-            })})
-
-            this.userService.getFollowersById(this.props.id)
-            .then(followers => this.setState({
-                followers: followers
-            }))
-    
-            this.userService.getFollowingById(this.props.id)
-            .then(following => this.setState({
-                following: following
-            }))
+            this.retrieveAllPublicUserData()
         }
         else {
             this.state = {
                 isPublic: false,
                 user: this.props.user,
+                userId: this.props.user.id,
                 followers: [],
                 following: []
             }
-            this.userService.getFollowers()
-            .then(followers => this.setState({
-                followers: followers
-            }))
-    
-            this.userService.getFollowing()
-            .then(following => this.setState({
-                following: following
-            }))
+            this.retrieveAllPrivateUserData()
         }
     }
 
@@ -56,12 +36,51 @@ class Profile extends React.Component {
       if (props.user.username !== state.user.username &&
           !state.isPublic) {
         return {user: props.user}
-      } else {
+      }
+      else {
           return state;
       }
     }
 
+    retrieveAllPublicUserData = () => {
+        this.userService.findUserById(this.props.id)
+        .then(user => {
+            this.setState({
+            user: user
+        })})
+
+        this.userService.getFollowersById(this.props.id)
+        .then(followers => this.setState({
+            followers: followers
+        }))
+
+        this.userService.getFollowingById(this.props.id)
+        .then(following => this.setState({
+            following: following
+        }))
+    }
+
+    retrieveAllPrivateUserData = () => {
+        this.userService.getFollowers()
+        .then(followers => this.setState({
+            followers: followers
+        }))
+
+        this.userService.getFollowing()
+        .then(following => this.setState({
+            following: following
+        }))
+    }
+
     render() {
+        if (this.state.userId !== undefined && 
+            this.props.id !== undefined &&
+            this.state.userId !== this.props.id) {
+                this.setState({
+                    userId: this.props.id
+                })
+                this.retrieveAllPublicUserData()
+        }
         if (this.state.user.id === undefined && 
             !this.state.isPublic) {
             return (<h1>
@@ -147,13 +166,20 @@ class Profile extends React.Component {
                             </div>
                         </div>
                     </form>
-                    <UserListPanel title='Following' users={this.state.following}/>
-                    <UserListPanel title='Followers' users={this.state.followers}/>
+                    <Row>
+                        <Col xs={6}>
+                            <UserListPanel title='Following' users={this.state.following}/>
+                        </Col>
+                        <Col xs={6}>
+                            <UserListPanel title='Followers' users={this.state.followers}/>
+                        </Col>
+                    </Row>
                 </div>
             )
         }
         else {
-            console.log('We are now rendering with this state: ', this.state.user)
+            console.log('We are now rendering with this state: ', this.state)
+            console.log(this.props.id)
             return (
                 <div className="container">
                         <h1>Profile</h1>
@@ -191,8 +217,14 @@ class Profile extends React.Component {
                                 <label className="col-sm-2 col-form-label"></label>
                             </div>
                         </form>
-                        <UserListPanel title='Following' users={this.state.following}/>
-                        <UserListPanel title='Followers' users={this.state.followers}/>
+                        <Row>
+                            <Col xs={6}>
+                                <UserListPanel title='Following' users={this.state.following}/>
+                            </Col>
+                            <Col xs={6}>
+                                <UserListPanel title='Followers' users={this.state.followers}/>
+                            </Col>
+                        </Row>
                     </div>
             )
         }
