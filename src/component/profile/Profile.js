@@ -3,11 +3,15 @@ import UserService from '../../services/UserService';
 import {Link} from 'react-router-dom'
 import UserListPanel from './UserListPanel';
 import { Row, Col, Button, Container } from 'react-bootstrap';
+import UserLikesPanel from './UserLikesPanel';
+import CommentsPanel from '../CommentsPanel';
+import CommentService from '../../services/CommentService';
 
 class Profile extends React.Component {
     constructor(props) {
         super(props)
         this.userService = UserService.getInstance()
+        this.commentService = CommentService.getInstance()
 
         // We are viewing a public profile
         if (this.props.id !== undefined) {
@@ -17,6 +21,8 @@ class Profile extends React.Component {
                 userId: this.props.id,
                 followers: [],
                 following: [],
+                firstFiveComments: [],
+                firstFiveCocktails: [],
                 loggedInFollowing: []
             }
             this.retrieveAllPublicUserData()
@@ -29,6 +35,8 @@ class Profile extends React.Component {
                 userId: this.props.user.id,
                 followers: [],
                 following: [],
+                firstFiveComments: [],
+                firstFiveCocktails: [],
                 loggedInFollowing: []
             }
             this.retrieveAllPrivateUserData()
@@ -62,6 +70,16 @@ class Profile extends React.Component {
         .then(following => this.setState({
             following: following
         }))
+
+        this.commentService.getCommentsByUserId(this.props.id, 5)
+        .then(comments => this.setState({
+            firstFiveComments: comments
+        }))
+
+        this.userService.getLikedCocktails(this.props.id, 5)
+        .then(cocktails => this.setState({
+            firstFiveCocktails: cocktails
+        }))
     }
 
     retrieveAllPrivateUserData = () => {
@@ -73,6 +91,16 @@ class Profile extends React.Component {
         this.userService.getFollowing()
         .then(following => this.setState({
             following: following
+        }))
+
+        this.commentService.getCommentsByUserId(this.props.user.id, 5)
+        .then(comments => this.setState({
+            firstFiveComments: comments
+        }))
+
+        this.userService.getLikedCocktails(this.props.user.id, 5)
+        .then(cocktails => this.setState({
+            firstFiveCocktails: cocktails
         }))
     }
     
@@ -179,6 +207,15 @@ class Profile extends React.Component {
                     </form>
                     <Row>
                         <Col xs={6}>
+                            <CommentsPanel title='Recent Comments by this User'
+                                           comments={this.state.firstFiveComments}/>
+                        </Col>
+                        <Col xs={6}>
+                            <UserLikesPanel title='Recently liked Cocktails'
+                                            cocktails={this.state.firstFiveCocktails}/>
+                        </Col>
+                        
+                        <Col xs={6}>
                             <UserListPanel title='Following' 
                                            users={this.state.following} 
                                            following={this.state.loggedInFollowing}
@@ -252,6 +289,15 @@ class Profile extends React.Component {
                             </div>
                         </form>
                         <Row>
+                            <Col xs={6}>
+                                <CommentsPanel title='Recent Comments by this User'
+                                            comments={this.state.firstFiveComments}/>
+                            </Col>
+                            <Col xs={6}>
+                                <UserLikesPanel title='Recently liked Cocktails'
+                                                cocktails={this.state.firstFiveCocktails}/>
+                            </Col>
+                            
                             <Col xs={6}>
                                 <UserListPanel title='Following' 
                                             users={this.state.following} 

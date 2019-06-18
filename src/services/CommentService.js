@@ -24,6 +24,8 @@ export default class CommentService extends BaseService {
 
     getComments = numPosts => this.findAllItems(`/comments/${numPosts}`);
 
+    getCommentsByUserId = (userId, numPosts) => this.findAllItems(`/user/${userId}/comments/${numPosts}`)
+
     createComment = (comment, cocktailId) => this.createItem(`/cocktail/${cocktailId}/comments`, comment);
 
     findCommentsByCocktailId = (cocktailId) => this.findById(`/cocktail/${cocktailId}/comments`)

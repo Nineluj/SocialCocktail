@@ -16,6 +16,7 @@ export default class UserService {
         this.getFollowingByIdUrl = '//' + this.pathHost + '/api/user/following/USER_ID'
         this.getFollowersByIdUrl = '//' + this.pathHost + '/api/user/followers/USER_ID'
         this.addFollowingUrl = '//' + this.pathHost + '/api/user/following/USER_ID'
+        this.getLikedCocktailsUrl = '//' + this.pathHost + '/api/users/USER_ID/likes/NUM_LIKES'
     }
 
     static myInstance = null;    
@@ -118,6 +119,13 @@ export default class UserService {
     addFollowing = (userId) => {
         return fetch(this.addFollowingUrl.replace('USER_ID', userId), {
             method: 'POST',
+            credentials: 'include'
+        }).then(response => response.json())
+    }
+
+    getLikedCocktails = (userId, numLikes) => {
+        return fetch(this.getLikedCocktailsUrl.replace('USER_ID', userId).replace('NUM_LIKES', numLikes), {
+            method: 'GET',
             credentials: 'include'
         }).then(response => response.json())
     }

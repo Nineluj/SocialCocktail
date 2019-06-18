@@ -66,6 +66,9 @@ class CocktailDetails extends React.Component {
     collectIngredients = () => {
         let ingredientArr = [];
         for (let i = 1; i < 15; i++) {
+            if (this.state.drink[`strIngredient${i}`] === null) {
+                continue
+            }
             let ingredient = this.state.drink[`strMeasure${i}`] + " " + this.state.drink[`strIngredient${i}`];
             if (ingredient.length > 2) {
                 ingredientArr.push(ingredient);
@@ -105,7 +108,7 @@ class CocktailDetails extends React.Component {
             title: this.state.newCommentTitle,
             created: new Date()
         }, this.props.id).then(comment => {
-            console.log(comment)
+            console.log(this.state.comments, 'comments state')
             this.setState(({
                 comments: this.state.comments.concat([comment]),
                 commentActive: false,
@@ -155,7 +158,7 @@ class CocktailDetails extends React.Component {
                         <h5>
                             Ingredients:
                             <ul>
-                                {this.state.ingredients.filter(ingr => ingr !== 'null null').map((ingr, index) => <li key={index}>{ingr}</li>)}
+                                {this.state.ingredients.map((ingr, index) => <li key={index}>{ingr}</li>)}
                             </ul>
                         </h5>
                         <p>
