@@ -38,6 +38,7 @@ const HomeNavHeader = ({user}) =>
             <Nav.Item>
                 <Nav.Link as={Link} to="/profile">
                     <FontAwesomeIcon icon="user" size="lg" className="align-middle text-dark"/>
+                    <span className="ml-2">{user.username}</span>
                 </Nav.Link>
             </Nav.Item>
             <Nav.Item>

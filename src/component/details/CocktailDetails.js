@@ -56,7 +56,6 @@ class CocktailDetails extends React.Component {
     };
 
     loadMetaData = (cocktail) => {
-        console.log(cocktail)
         this.setState({
             comments: cocktail.comments,
             usersLikedBy: cocktail.usersLikedBy

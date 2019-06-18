@@ -4,7 +4,6 @@ import {Link} from 'react-router-dom'
 
 const Comment = ({title, date, content, author, cocktail, hideCocktailLink}) =>
 <Card className="mx-auto">
-    {console.log('***', cocktail)}
     <Card.Body>
         <Card.Title>
             {title}

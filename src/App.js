@@ -9,6 +9,7 @@ import Home from './component/home/Home';
 import UserService from './services/UserService'
 import CocktailDetails from './component/details/CocktailDetails';
 import HomeNavHeader from "./component/HomeNavHeader";
+import AdminDashboard from "./component/admin/AdminDashboard";
 
 class App extends React.Component {
     constructor(props) {
@@ -44,11 +45,15 @@ class App extends React.Component {
                                                retrieveLoggedInUser={this.retrieveLoggedInUser}/>}
                 />
                 <Route exact path="/profile"
-                       render={() => <Profile user={this.state.user}/>}
+                       render={() => <Profile user={this.state.user}
+                                              retrieveLoggedInUser={this.retrieveLoggedInUser}
+                       />}
                 />
                 <Route exact path="/profile/:id"
                        render={({match}) => <Profile id={match.params.id}
-                                                     user={this.state.user}/>}
+                                                     user={this.state.user}
+                                                     retrieveLoggedInUser={this.retrieveLoggedInUser}
+                       />}
                 />
                 <Route exact path="/search"
                        render={() => <Search user={this.state.user}/>}
@@ -60,6 +65,8 @@ class App extends React.Component {
                        render={({match}) => <Search user={this.state.user}
                                                     searchCriteria={match.params.searchCriteria}/>}
                 />
+                <Route exact path="/admin"
+                       render={() => <AdminDashboard user={this.state.user}/>}/>
             </Router>
         )
     }

@@ -16,14 +16,12 @@ class Home extends React.Component {
             yourComments: []
         }
         if (this.props.user.id === undefined) {
-            console.log('yeet')
             this.commentService.getRecentComments(3)
             .then(comments => this.setState({
                 recentComments: comments
             }))
         }
         else {
-            console.log('FAITH')
             this.commentService.getFollowingComments(3)
             .then(comments => this.setState({
                 followingComments: comments

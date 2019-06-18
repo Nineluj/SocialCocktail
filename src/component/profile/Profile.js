@@ -28,7 +28,7 @@ class Profile extends React.Component {
             this.retrieveAllPublicUserData()
             this.getLoggedInFollowing()
         }
-        else {
+        else if (this.props.user.id !== undefined) {
             this.state = {
                 isPublic: false,
                 user: this.props.user,
@@ -37,16 +37,38 @@ class Profile extends React.Component {
                 following: [],
                 firstFiveComments: [],
                 firstFiveCocktails: [],
-                loggedInFollowing: []
-            }
+                loggedInFollowing: [],
+            };
+
             this.retrieveAllPrivateUserData()
+        } else {
+            this.state = {
+                isPublic: false,
+                user: {},
+                userId: -1,
+                followers: [],
+                following: [],
+                firstFiveComments: [],
+                firstFiveCocktails: [],
+                loggedInFollowing: [],
+            }
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.user.id !== prevProps.user.id) {
+            this.setState({
+                user: this.props.user,
+                userId: this.props.user.id
+            })
         }
     }
 
     static getDerivedStateFromProps(props, state) {
+
       if (props.user.username !== state.user.username &&
           !state.isPublic) {
-        return {user: props.user}
+        return {user: props.user, userId: props.user.id}
       }
       else {
           return state;
@@ -152,9 +174,14 @@ class Profile extends React.Component {
                                     id="phone"
                                     placeholder="(123) 456-7890"
                                     type="tel"
-                                    onChange={(event) => this.setState({
-                                        phoneNum: event.target.value
-                                    })}
+                                    onChange={(event) => {
+                                        let updatedUser = {...this.state.user};
+                                        updatedUser.phoneNum = event.target.value;
+
+                                        this.setState({
+                                            user: updatedUser
+                                        })
+                                    }}
                                     value={this.state.user.phoneNum}/>
                             </div>
                         </div>
@@ -167,9 +194,14 @@ class Profile extends React.Component {
                                     id="email"
                                     placeholder="alice@wonderland.com"
                                     type="email"
-                                    onChange={(event) => this.setState({
-                                        email: event.target.value
-                                    })}
+                                    onChange={(event) => {
+                                        let updatedUser = {...this.state.user};
+                                        updatedUser.email = event.target.value;
+
+                                        this.setState({
+                                            user: updatedUser
+                                        })
+                                    }}
                                     value={this.state.user.email}/>
                             </div>
                         </div>
@@ -181,9 +213,14 @@ class Profile extends React.Component {
                             <div className="col-sm-10">
                                 <select className="form-control"
                                         id="role"
-                                        onChange={(event) => this.setState({
-                                            role: event.target.value
-                                        })}
+                                        onChange={(event) => {
+                                            let updatedUser = {...this.state.user};
+                                            updatedUser.role = event.target.value;
+
+                                            this.setState({
+                                                user: updatedUser
+                                            })
+                                        }}
                                         value={this.state.user.role}>
                                     <option value='STANDARD'>Standard User</option>
                                     <option value='ADMIN'>Admin</option>
@@ -194,10 +231,15 @@ class Profile extends React.Component {
                             <label className="col-sm-2 col-form-label"></label>
                             <div className="col-sm-10">
                                 <button className="btn btn-success btn-block"
-                                        onClick={() => this.userService.updateUser(this.state)
-                                                    .then(user => this.setState({
-                                                        user: user
-                                                    }))}>
+                                        onClick={() => {
+                                            this.userService.updateUser(this.state.user)
+                                                .then(user => this.setState({
+                                                    user: user,
+                                                    userId: user.id
+                                                }))
+
+                                            this.props.retrieveLoggedInUser()
+                                        }}>
                                     Update
                                 </button>
                                 <button className="btn btn-danger btn-block">Logout</button>
@@ -237,17 +279,17 @@ class Profile extends React.Component {
                 <div className="container">
                         <Row>
                             <h1>Profile</h1>
-                            {(!this.state.loggedInFollowing.map(followUser => followUser.id.toString()).includes(this.state.userId) &&
+                            {(!this.state.loggedInFollowing.map(followUser => followUser.id).includes(this.state.user.id) &&
                               this.props.user !== undefined && 
                               this.props.user.id !== undefined &&
                               this.props.user.id.toString() !== this.state.userId)
                              &&
                             <Button onClick={() => this.userService.addFollowing(this.state.userId)
-                                                    .then(loggedInFollowing => {
-                                                        this.setState({
-                                                            loggedInFollowing: loggedInFollowing
-                                                        })
-                                                        //this.retrieveAllPublicUserData()
+                                                    .then(userGotFollowed => {
+                                                        this.setState(prevState => ({
+                                                            loggedInFollowing: prevState.loggedInFollowing.concat([userGotFollowed]),
+                                                            followers: prevState.followers.concat([this.props.user])
+                                                        }))
                                                     })
                                             }>
                                 Follow

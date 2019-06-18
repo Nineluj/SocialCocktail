@@ -7,7 +7,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class Login extends React.Component {
     constructor(props) {
-        console.log(props.user)
         super(props)
         this.userService = UserService.getInstance()
         this.state = {
