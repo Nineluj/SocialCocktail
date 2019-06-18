@@ -40,7 +40,6 @@ class Profile extends React.Component {
                 loggedInFollowing: []
             }
             this.retrieveAllPrivateUserData()
-            this.getLoggedInFollowing()
         }
     }
 
