@@ -32,4 +32,6 @@ export default class CocktailService extends BaseService {
     findUserLikes = id => this.findById(`/cocktails/${id}/likes`);
 
     likeCocktail = id => this.postNoResponse(`/cocktails/${id}/likes`);
+
+    addTip = (id, tip) => this.createItem(`/cocktails/${id}/addTip`, tip)
 }

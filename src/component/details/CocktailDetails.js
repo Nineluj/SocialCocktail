@@ -31,7 +31,8 @@ class CocktailDetails extends React.Component {
             usersLikedBy: [],
             showTipModal: false,
             showGlassInfoModal: false,
-            glassType: {}
+            glassType: {},
+            tipText: ''
         };
     }
 
@@ -134,6 +135,12 @@ class CocktailDetails extends React.Component {
         })
     }
 
+    setTipText = (text) => {
+        this.setState({
+            tipText: text
+        })
+    }
+
     render() {
         let { drink } = this.state;
 
@@ -145,13 +152,25 @@ class CocktailDetails extends React.Component {
                     </Modal.Header>
                     <Modal.Body>
                         Submit a tip below:
-                        <input className='form-control'/>
+                        <input className='form-control'
+                               onChange={(event) => this.setTipText(event.target.value)}
+                               value={this.state.tipText}/>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={() => this.setTipModalVisibility(false)}>
                         Close
                         </Button>
-                        <Button variant="success" onClick={() => this.setTipModalVisibility(false)}>
+                        <Button variant="success" onClick={() => 
+                            {
+                                this.cocktailService.addTip(this.props.id, {
+                                    text: this.state.tipText
+                                })
+                                .then(tip => console.log(tip))
+                                this.setState({
+                                    tipText: ''
+                                })
+                                this.setTipModalVisibility(false)
+                            }}>
                         Submit
                         </Button>
                     </Modal.Footer>
@@ -204,9 +223,14 @@ class CocktailDetails extends React.Component {
                         <h3>
                             <FontAwesomeIcon className="mr-2" icon="info-circle"/>
                             {drink.strCategory}
-                            <Button vairant="info" className="float-right" onClick={() => this.setGlassInfoModalVisibility(true)}>
-                                Glass Info
-                            </Button>
+                            <div className="float-right">
+                                    <Button vairant="info" onClick={() => this.setGlassInfoModalVisibility(true)} className="mr-1">
+                                        Glass Info
+                                    </Button>
+                                    {this.props.user.verified && 
+                                    <Button variant='success' onClick={() => this.setTipModalVisibility(true)}>Add Tip</Button>
+                                    }   
+                            </div>
                         </h3>
                         <h5>
                             Ingredients:
@@ -217,9 +241,6 @@ class CocktailDetails extends React.Component {
                         <p>
                             Instructions: <i>{drink.strInstructions}</i>
                         </p>
-                        {//this.props.user.isVerified && 
-                        <button class='btn btn-success' onClick={() => this.setTipModalVisibility(true)}>Add Tip</button>
-                        }
                     </Col>
                 </div>
                 <Row className="mt-2" >
