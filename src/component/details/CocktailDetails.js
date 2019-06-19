@@ -131,7 +131,7 @@ class CocktailDetails extends React.Component {
             <Container fluid className="cocktail-details">
                 <Modal show={this.state.showTipModal} onHide={() => this.setModalVisibility(false)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Modal heading</Modal.Title>
+                        <Modal.Title>Add a Tip</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         Submit a tip below:
