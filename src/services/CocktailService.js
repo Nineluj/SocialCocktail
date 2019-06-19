@@ -4,7 +4,7 @@ export default class CocktailService extends BaseService {
     constructor() {
         super();
         this.pathHost = window.location.hostname === 'localhost' ? 'localhost:8080' : '';
-        this.createCocktailUrl = '//' + this.pathHost + '/api/cocktails'
+        this.createCocktailUrl = '//' + this.pathHost + '/api/cocktails?glassType=GLASS_TYPE'
     }
 
     static myInstance = null;    
@@ -16,8 +16,8 @@ export default class CocktailService extends BaseService {
     }
 
     // Returns status of creating a cocktail
-    createCocktail = (cocktail) => {
-        return fetch(this.createCocktailUrl, {
+    createCocktail = (cocktail, glassType) => {
+        return fetch(encodeURI(this.createCocktailUrl.replace('GLASS_TYPE', glassType)), {
             method: 'POST',
             body: JSON.stringify(cocktail),
             credentials: 'include',
