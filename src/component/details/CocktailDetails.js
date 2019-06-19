@@ -48,7 +48,7 @@ class CocktailDetails extends React.Component {
                 this.cocktailService.createCocktail({
                     id: id,
                     name: this.state.drink.strDrink
-                })
+                }, this.state.drink.strGlass)
             } else {
                 this.loadMetaData(values[0])
             }
