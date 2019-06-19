@@ -1,5 +1,5 @@
 import React from "react";
-import {Badge, Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Badge, Button, Col, Container, Form, Row, Modal} from "react-bootstrap";
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";
@@ -28,7 +28,8 @@ class CocktailDetails extends React.Component {
             newCommentTitle: '',
             newCommentText: '',
             comments: [],
-            usersLikedBy: []
+            usersLikedBy: [],
+            showTipModal: false
         };
     }
 
@@ -117,11 +118,34 @@ class CocktailDetails extends React.Component {
         });
     };
 
+    setModalVisibility = (visible) => {
+        this.setState({
+            showTipModal: visible
+        })
+    }
+
     render() {
         let { drink } = this.state;
 
         return (
             <Container fluid className="cocktail-details">
+                <Modal show={this.state.showTipModal} onHide={() => this.setModalVisibility(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Submit a tip below:
+                        <input className='form-control'/>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.setModalVisibility(false)}>
+                        Close
+                        </Button>
+                        <Button variant="success" onClick={() => this.setModalVisibility(false)}>
+                        Submit
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
                 <Row>
                     <Col xs={{span: 5, offset: 1}}>
                         <h1 className="cocktail-details-title my-4">
@@ -163,6 +187,9 @@ class CocktailDetails extends React.Component {
                         <p>
                             Instructions: <i>{drink.strInstructions}</i>
                         </p>
+                        {//this.props.user.isVerified && 
+                        <button class='btn btn-success' onClick={() => this.setModalVisibility(true)}>Add Tip</button>
+                        }
                     </Col>
                 </div>
                 <Row className="mt-2" >
