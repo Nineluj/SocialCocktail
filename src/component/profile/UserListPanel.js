@@ -18,9 +18,9 @@ const UserListPanel = ({title, users, following, loggedInId, getLoggedInFollowin
                     <div>
                         <li>
                             <Link to={`/profile/${user.id}`}>
-                                <h4>
+                                <span>
                                     {user.username}
-                                </h4>
+                                </span>
                             </Link>
                         </li>
                     </div>

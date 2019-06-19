@@ -6,6 +6,7 @@ import { Row, Col, Button, Container } from 'react-bootstrap';
 import UserLikesPanel from './UserLikesPanel';
 import CommentsPanel from '../CommentsPanel';
 import CommentService from '../../services/CommentService';
+import './Profile.scss';
 
 class Profile extends React.Component {
     constructor(props) {
@@ -133,6 +134,8 @@ class Profile extends React.Component {
     }
 
     render() {
+        console.log('///', this.state.user);
+
         if (this.state.userId !== undefined && 
             this.props.id !== undefined &&
             this.state.userId !== this.props.id) {
@@ -165,6 +168,45 @@ class Profile extends React.Component {
                                     value={this.state.user.username}/>
                             </div>
                         </div>
+
+                        <div className="form-group row">
+                            <label htmlFor="role"
+                                   className="col-sm-2 col-form-label">
+                                Role
+                            </label>
+                            <div className="col-sm-10">
+                                <select className="form-control"
+                                        id="role"
+                                        disabled
+                                        onChange={(event) => {
+                                            let updatedUser = {...this.state.user};
+                                            updatedUser.role = event.target.value;
+
+                                            this.setState({
+                                                user: updatedUser
+                                            })
+                                        }}
+                                        value={this.state.user.role}>
+                                    <option value='ENTHUSIAST'>Enthusiast</option>
+                                    <option value='BARTENDER'>Bartender</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {
+                            this.state.user.role === "BARTENDER" &&
+                            <div className="row mt-2 mb-4">
+                                <div className="col-5 offset-2">
+                                    <span className="font-weight-bold mr-1">
+                                        Status:
+                                    </span>
+                                    {this.state.user.verified
+                                        ? "You have been verified"
+                                        : "You are pending verification"}
+                                </div>
+                            </div>
+                        }
+
                         <div className="form-group row">
                             <label htmlFor="phone"
                                 className="col-sm-2 col-form-label">
@@ -206,29 +248,7 @@ class Profile extends React.Component {
                             </div>
                         </div>
                         <div className="form-group row">
-                            <label htmlFor="role"
-                                className="col-sm-2 col-form-label">
-                                Role
-                            </label>
-                            <div className="col-sm-10">
-                                <select className="form-control"
-                                        id="role"
-                                        onChange={(event) => {
-                                            let updatedUser = {...this.state.user};
-                                            updatedUser.role = event.target.value;
-
-                                            this.setState({
-                                                user: updatedUser
-                                            })
-                                        }}
-                                        value={this.state.user.role}>
-                                    <option value='STANDARD'>Standard User</option>
-                                    <option value='ADMIN'>Admin</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="form-group row">
-                            <label className="col-sm-2 col-form-label"></label>
+                            <label className="col-sm-2 col-form-label"/>
                             <div className="col-sm-10">
                                 <button className="btn btn-success btn-block"
                                         onClick={() => {
@@ -276,7 +296,7 @@ class Profile extends React.Component {
         }
         else {
             return (
-                <div className="container">
+                <div className="container container mt-3">
                         <Row>
                             <h1>Profile</h1>
                             {(!this.state.loggedInFollowing.map(followUser => followUser.id).includes(this.state.user.id) &&
@@ -284,7 +304,7 @@ class Profile extends React.Component {
                               this.props.user.id !== undefined &&
                               this.props.user.id.toString() !== this.state.userId)
                              &&
-                            <Button onClick={() => this.userService.addFollowing(this.state.userId)
+                            <Button className="follow-btn ml-2" onClick={() => this.userService.addFollowing(this.state.userId)
                                                     .then(userGotFollowed => {
                                                         this.setState(prevState => ({
                                                             loggedInFollowing: prevState.loggedInFollowing.concat([userGotFollowed]),
@@ -310,21 +330,33 @@ class Profile extends React.Component {
                             </div>
                             <div className="form-group row">
                                 <label htmlFor="role"
-                                    className="col-sm-2 col-form-label">
-                                    Role </label>
+                                       className="col-sm-2 col-form-label">
+                                    Role
+                                </label>
                                 <div className="col-sm-10">
                                     <select className="form-control"
                                             id="role"
-                                            disabled={true}
-                                            onChange={(event) => this.setState({
-                                                role: event.target.value
-                                            })}
+                                            disabled
                                             value={this.state.user.role}>
-                                        <option value='STANDARD'>Standard User</option>
-                                        <option value='ADMIN'>Admin</option>
+                                        <option value='ENTHUSIAST'>Enthusiast</option>
+                                        <option value='BARTENDER'>Bartender</option>
                                     </select>
                                 </div>
                             </div>
+
+                            {
+                                this.state.user.role === "BARTENDER" &&
+                                <div className="row mt-2 mb-4">
+                                    <div className="col-5 offset-2">
+                                    <span className="font-weight-bold mr-1">
+                                        Status:
+                                    </span>
+                                        {this.state.user.verified
+                                            ? "User has been verified"
+                                            : "User is pending verification"}
+                                    </div>
+                                </div>
+                            }
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label"></label>
                             </div>

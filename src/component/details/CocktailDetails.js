@@ -241,6 +241,12 @@ class CocktailDetails extends React.Component {
                         <p>
                             Instructions: <i>{drink.strInstructions}</i>
                         </p>
+<<<<<<< HEAD
+=======
+                        {//this.props.user.verified &&
+                        <button class='btn btn-success' onClick={() => this.setTipModalVisibility(true)}>Add Tip</button>
+                        }
+>>>>>>> 7b96e88c9a81c8463292981858f8af17e2ac9ebc
                     </Col>
                 </div>
                 <Row className="mt-2" >
