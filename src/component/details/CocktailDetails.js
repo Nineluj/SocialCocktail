@@ -52,6 +52,7 @@ class CocktailDetails extends React.Component {
                     id: id,
                     name: this.state.drink.strDrink
                 }, this.state.drink.strGlass)
+                .then(cocktail => this.loadMetaData(cocktail))
             } else {
                 this.loadMetaData(values[0])
             }
