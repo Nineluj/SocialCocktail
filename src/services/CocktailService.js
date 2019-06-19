@@ -24,7 +24,7 @@ export default class CocktailService extends BaseService {
             headers: {
                 'content-type': 'application/json'
             }
-        }).then(response => response.status)
+        }).then(response => response.json())
     }
 
     findCocktailById = id => this.findById(`/cocktails/${id}`);
