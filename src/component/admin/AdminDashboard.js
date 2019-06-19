@@ -31,7 +31,7 @@ class AdminDashboard extends React.Component {
 
     verifyBartender = (uid) =>
         this.adminService.verifyBartenderRequest(uid)
-            .then(response => this.response.status === 200 ?
+            .then(response => response.status === 200 ?
                 this.setState(prevState => ({ requests: prevState.requests.filter(req => req.id !== uid) }))
                 : alert(`Error approving user with id ${uid}`));
 
@@ -49,7 +49,7 @@ class AdminDashboard extends React.Component {
                 <h2>Review the bartender requests</h2>
                 {requests.length > 0 &&
                 <ListGroup>
-                    {requests.map(req => <BartenderRequest {...req} verifyBartender={this.verifyBartender}/>) }
+                    {requests.map(req => <BartenderRequest {...req} key={req.id} verifyBartender={this.verifyBartender}/>) }
                 </ListGroup>
                 }
                 {requests.length === 0 &&
