@@ -217,7 +217,7 @@ class CocktailDetails extends React.Component {
                         <p>
                             Instructions: <i>{drink.strInstructions}</i>
                         </p>
-                        {//this.props.user.isVerified && 
+                        {//this.props.user.verified &&
                         <button class='btn btn-success' onClick={() => this.setTipModalVisibility(true)}>Add Tip</button>
                         }
                     </Col>
