@@ -31,7 +31,9 @@ class AdminDashboard extends React.Component {
 
     verifyBartender = (uid) =>
         this.adminService.verifyBartenderRequest(uid)
-            .then(this.setState(prevState => ({ requests: prevState.requests.filter(req => req.id !== uid) })));
+            .then(response => this.response.status === 200 ?
+                this.setState(prevState => ({ requests: prevState.requests.filter(req => req.id !== uid) }))
+                : alert(`Error approving user with id ${uid}`));
 
     render() {
         if (!this.props.user.isAdmin) {
