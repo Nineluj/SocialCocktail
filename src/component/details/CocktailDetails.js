@@ -67,7 +67,7 @@ class CocktailDetails extends React.Component {
             comments: cocktail.comments,
             usersLikedBy: cocktail.usersLikedBy,
             glassType: cocktail.glassType,
-            tips: cocktail.tips
+            tips: cocktail.tips === null ? []: cocktail.tips
         })
     }
 
@@ -172,7 +172,11 @@ class CocktailDetails extends React.Component {
                             {
                                 this.cocktailService.addTip(this.props.id, {
                                     text: this.state.tipText
-                                })
+                                }).then(tip => this.setState(prevState => {
+                                    var newTips = prevState.tips
+                                    newTips.push(tip)
+                                    return {tips: newTips}
+                                }))
                                 this.setState({
                                     tipText: ''
                                 })
