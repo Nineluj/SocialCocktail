@@ -29,7 +29,9 @@ class CocktailDetails extends React.Component {
             newCommentText: '',
             comments: [],
             usersLikedBy: [],
-            showTipModal: false
+            showTipModal: false,
+            showGlassInfoModal: false,
+            glassType: {}
         };
     }
 
@@ -59,7 +61,8 @@ class CocktailDetails extends React.Component {
     loadMetaData = (cocktail) => {
         this.setState({
             comments: cocktail.comments,
-            usersLikedBy: cocktail.usersLikedBy
+            usersLikedBy: cocktail.usersLikedBy,
+            glassType: cocktail.glassType
         })
     }
 
@@ -118,9 +121,15 @@ class CocktailDetails extends React.Component {
         });
     };
 
-    setModalVisibility = (visible) => {
+    setTipModalVisibility = (visible) => {
         this.setState({
             showTipModal: visible
+        })
+    }
+
+    setGlassInfoModalVisibility = (visible) => {
+        this.setState({
+            showGlassInfoModal: visible
         })
     }
 
@@ -129,7 +138,7 @@ class CocktailDetails extends React.Component {
 
         return (
             <Container fluid className="cocktail-details">
-                <Modal show={this.state.showTipModal} onHide={() => this.setModalVisibility(false)}>
+                <Modal show={this.state.showTipModal} onHide={() => this.setTipModalVisibility(false)}>
                     <Modal.Header closeButton>
                         <Modal.Title>Add a Tip</Modal.Title>
                     </Modal.Header>
@@ -138,14 +147,31 @@ class CocktailDetails extends React.Component {
                         <input className='form-control'/>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.setModalVisibility(false)}>
+                        <Button variant="secondary" onClick={() => this.setTipModalVisibility(false)}>
                         Close
                         </Button>
-                        <Button variant="success" onClick={() => this.setModalVisibility(false)}>
+                        <Button variant="success" onClick={() => this.setTipModalVisibility(false)}>
                         Submit
                         </Button>
                     </Modal.Footer>
                 </Modal>
+
+                <Modal show={this.state.showGlassInfoModal} onHide={() => this.setGlassInfoModalVisibility(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>{this.state.glassType.name}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>
+                            {this.state.glassType.description}
+                        </p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.setGlassInfoModalVisibility(false)}>
+                        Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
                 <Row>
                     <Col xs={{span: 5, offset: 1}}>
                         <h1 className="cocktail-details-title my-4">
@@ -177,6 +203,9 @@ class CocktailDetails extends React.Component {
                         <h3>
                             <FontAwesomeIcon className="mr-2" icon="info-circle"/>
                             {drink.strCategory}
+                            <Button vairant="info" className="float-right" onClick={() => this.setGlassInfoModalVisibility(true)}>
+                                Glass Info
+                            </Button>
                         </h3>
                         <h5>
                             Ingredients:
@@ -188,7 +217,7 @@ class CocktailDetails extends React.Component {
                             Instructions: <i>{drink.strInstructions}</i>
                         </p>
                         {//this.props.user.isVerified && 
-                        <button class='btn btn-success' onClick={() => this.setModalVisibility(true)}>Add Tip</button>
+                        <button class='btn btn-success' onClick={() => this.setTipModalVisibility(true)}>Add Tip</button>
                         }
                     </Col>
                 </div>
