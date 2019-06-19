@@ -31,7 +31,9 @@ class CocktailDetails extends React.Component {
             usersLikedBy: [],
             showTipModal: false,
             showGlassInfoModal: false,
+            showTipsListModal: false,
             glassType: {},
+            tips: [],
             tipText: ''
         };
     }
@@ -64,7 +66,8 @@ class CocktailDetails extends React.Component {
         this.setState({
             comments: cocktail.comments,
             usersLikedBy: cocktail.usersLikedBy,
-            glassType: cocktail.glassType
+            glassType: cocktail.glassType,
+            tips: cocktail.tips
         })
     }
 
@@ -113,7 +116,6 @@ class CocktailDetails extends React.Component {
             title: this.state.newCommentTitle,
             created: new Date()
         }, this.props.id).then(comment => {
-            console.log(this.state.comments, 'comments state')
             this.setState(({
                 comments: this.state.comments.concat([comment]),
                 commentActive: false,
@@ -132,6 +134,12 @@ class CocktailDetails extends React.Component {
     setGlassInfoModalVisibility = (visible) => {
         this.setState({
             showGlassInfoModal: visible
+        })
+    }
+
+    setTipsListModalVisibility = (visible) => {
+        this.setState({
+            showTipsListModal: visible
         })
     }
 
@@ -165,7 +173,6 @@ class CocktailDetails extends React.Component {
                                 this.cocktailService.addTip(this.props.id, {
                                     text: this.state.tipText
                                 })
-                                .then(tip => console.log(tip))
                                 this.setState({
                                     tipText: ''
                                 })
@@ -192,6 +199,29 @@ class CocktailDetails extends React.Component {
                     </Modal.Footer>
                 </Modal>
 
+                <Modal show={this.state.showTipsListModal} onHide={() => this.setTipsListModalVisibility(false)}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Tips from our Verified Bartenders</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <ul className="list-group">
+                            {this.state.tips.map(tip => 
+                            <li className="list-group-item">
+                                {tip.text} 
+                                <Link to={`/profile/${tip.bartender.id}`}
+                                      className="float-right">
+                                    {tip.bartender.username}
+                                </Link>
+                            </li>)}
+                        </ul>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={() => this.setTipsListModalVisibility(false)}>
+                        Close
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
                 <Row>
                     <Col xs={{span: 5, offset: 1}}>
                         <h1 className="cocktail-details-title my-4">
@@ -210,6 +240,9 @@ class CocktailDetails extends React.Component {
                                 }}}>
                                 <FontAwesomeIcon icon="thumbs-up" size="lg"/>
                             </Button>
+                            <Button variant='danger' 
+                                    className="ml-1"
+                                    onClick={() => this.setTipsListModalVisibility(true)}>View Tips From The Pros</Button>
                         </h1>
                     </Col>
                 </Row>
@@ -224,7 +257,7 @@ class CocktailDetails extends React.Component {
                             <FontAwesomeIcon className="mr-2" icon="info-circle"/>
                             {drink.strCategory}
                             <div className="float-right">
-                                    <Button vairant="info" onClick={() => this.setGlassInfoModalVisibility(true)} className="mr-1">
+                                    <Button variant="info" onClick={() => this.setGlassInfoModalVisibility(true)} className="mr-1">
                                         Glass Info
                                     </Button>
                                     {this.props.user.verified && 
