@@ -8,7 +8,7 @@ import Search from './component/search/Search';
 import Home from './component/home/Home';
 import UserService from './services/UserService'
 import CocktailDetails from './component/details/CocktailDetails';
-import HomeNavHeader from "./component/HomeNavHeader";
+import NavHeader from "./component/NavHeader";
 import AdminDashboard from "./component/admin/AdminDashboard";
 
 class App extends React.Component {
@@ -30,9 +30,10 @@ class App extends React.Component {
     };
 
     render() {
+        console.log(this.state.user)
         return (
             <Router>
-                <HomeNavHeader user={this.state.user}/>
+                <NavHeader user={this.state.user}/>
                 <Route exact path="/"
                        render={() => <Home user={this.state.user}/>}
                 />

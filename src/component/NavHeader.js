@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 let userService = UserService.getInstance()
 
-const HomeNavHeader = ({user}) =>
+const NavHeader = ({user}) =>
     <Navbar expand="lg" className="main-navbar">
         <Navbar.Brand as={Link} to="/">
             <h1>
@@ -17,24 +17,32 @@ const HomeNavHeader = ({user}) =>
         <Navbar.Toggle />
         <Navbar.Collapse>
             <Nav className="mr-auto">
-                <Nav.Item eventkey={1} href="/">
+                <Nav.Item>
                     <Nav.Link as={Link} to="/" ><h4>Home</h4></Nav.Link>
                 </Nav.Item>
-                <Nav.Item eventkey={2} href="/search">
+                <Nav.Item >
                     <Nav.Link as={Link} to="/search" ><h4>Search</h4></Nav.Link>
                 </Nav.Item>
                 {user.id === undefined &&
-                <Nav.Item eventkey={4} href="/login">
+                <Nav.Item>
                     <Nav.Link as={Link} to="/login" ><h4>Login</h4></Nav.Link>
                 </Nav.Item>}
                 {user.id === undefined &&
-                <Nav.Item eventkey={5} href="/register">
+                <Nav.Item>
                     <Nav.Link as={Link} to="/register" ><h4>Register</h4></Nav.Link>
                 </Nav.Item>}
             </Nav>
         </Navbar.Collapse>
         {user.id !== undefined &&
         <Navbar.Collapse className="justify-content-end">
+            {user.isAdmin &&
+            <Nav.Item>
+                <Nav.Link as={Link} to="/admin">
+                    <FontAwesomeIcon icon="users-cog" size="lg" className="align-middle text-dark"/>
+                    <span className="ml-2">Manage Requests</span>
+                </Nav.Link>
+            </Nav.Item>
+            }
             <Nav.Item>
                 <Nav.Link as={Link} to="/profile">
                     <FontAwesomeIcon icon="user" size="lg" className="align-middle text-dark"/>
@@ -53,6 +61,6 @@ const HomeNavHeader = ({user}) =>
             </Nav.Item>
         </Navbar.Collapse>
         }
-    </Navbar>
+    </Navbar>;
 
-export default HomeNavHeader
+export default NavHeader
