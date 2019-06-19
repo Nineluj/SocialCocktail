@@ -6,6 +6,7 @@ export default class UserService {
 
         this.authenticateUserUrl = '//' + this.pathHost + '/api/users/login'
         this.registerUserUrl = '//' + this.pathHost + '/api/users/register'
+        this.registerBartenderUrl = '//' + this.pathHost + '/api/users/bartender'
         this.getLoggedInUserUrl = '//' + this.pathHost + '/api/user'
         this.logoutUserUrl = '//' + this.pathHost + '/api/user/logout'
         this.updateUserUrl = '//' + this.pathHost + '/api/user'
@@ -50,6 +51,18 @@ export default class UserService {
             }
         })
     }
+
+    registerBartender = (user) => {
+        user.password = sha256(user.password).toString()
+        return fetch(this.registerBartenderUrl, {
+            method: 'POST',
+            body: JSON.stringify(user),
+            credentials: 'include',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+    };
 
     getLoggedInUser = () => {
         return fetch(this.getLoggedInUserUrl, {
