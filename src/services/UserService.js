@@ -1,23 +1,22 @@
 import sha256 from 'crypto-js/sha256';
+import {API_ROOT} from '../api-config';
 
 export default class UserService {
     constructor() {
-        this.pathHost = window.location.hostname === 'localhost' ? 'localhost:8080' : '';
-
-        this.authenticateUserUrl = '//' + this.pathHost + '/api/users/login'
-        this.registerUserUrl = '//' + this.pathHost + '/api/users/register'
-        this.registerBartenderUrl = '//' + this.pathHost + '/api/users/bartender'
-        this.getLoggedInUserUrl = '//' + this.pathHost + '/api/user'
-        this.logoutUserUrl = '//' + this.pathHost + '/api/user/logout'
-        this.updateUserUrl = '//' + this.pathHost + '/api/user'
-        this.findUserByIdUrl = '//' + this.pathHost + '/api/users/USER_ID'
-        this.addLikedCocktailUrl = '//' + this.pathHost + '/api/user/likes/cocktail/COCKTAIL_ID'
-        this.getFollowingUrl = '//' + this.pathHost + '/api/user/following'
-        this.getFollowersUrl = '//' + this.pathHost + '/api/user/followers'
-        this.getFollowingByIdUrl = '//' + this.pathHost + '/api/user/following/USER_ID'
-        this.getFollowersByIdUrl = '//' + this.pathHost + '/api/user/followers/USER_ID'
-        this.addFollowingUrl = '//' + this.pathHost + '/api/user/following/USER_ID'
-        this.getLikedCocktailsUrl = '//' + this.pathHost + '/api/users/USER_ID/likes/NUM_LIKES'
+        this.authenticateUserUrl = `${API_ROOT}/users/login`;
+        this.registerUserUrl = `${API_ROOT}/users/register`;
+        this.registerBartenderUrl = `${API_ROOT}/users/bartender`;
+        this.getLoggedInUserUrl = `${API_ROOT}/user`
+        this.logoutUserUrl = `${API_ROOT}/user/logout`
+        this.updateUserUrl = `${API_ROOT}/user`
+        this.findUserByIdUrl = `${API_ROOT}/users/USER_ID`
+        this.addLikedCocktailUrl = `${API_ROOT}/user/likes/cocktail/COCKTAIL_ID`
+        this.getFollowingUrl = `${API_ROOT}/user/following`
+        this.getFollowersUrl = `${API_ROOT}/user/followers`
+        this.getFollowingByIdUrl = `${API_ROOT}/user/following/USER_ID`
+        this.getFollowersByIdUrl = `${API_ROOT}/user/followers/USER_ID`
+        this.addFollowingUrl = `${API_ROOT}/user/following/USER_ID`
+        this.getLikedCocktailsUrl = `${API_ROOT}/users/USER_ID/likes/NUM_LIKES`
     }
 
     static myInstance = null;    
@@ -30,6 +29,7 @@ export default class UserService {
 
     authenticateUser = (user) => {
         user.password = sha256(user.password).toString()
+        console.log('@@@', this.authenticateUserUrl)
         return fetch(this.authenticateUserUrl, {
             method: 'POST',
             body: JSON.stringify(user),
@@ -142,11 +142,4 @@ export default class UserService {
             credentials: 'include'
         }).then(response => response.json())
     }
-
-    // addLikedCocktail = (id) => {
-    //     return fetch(this.addLikedCocktailUrl.replace('COCKTAIL_ID', id), {
-    //         method: 'POST',
-    //         credentials: 'include'
-    //     })
-    // }
 }

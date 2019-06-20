@@ -1,5 +1,5 @@
 import React from "react";
-import {Badge, Button, Col, Container, Form, Row, Modal} from "react-bootstrap";
+import {Badge, Button, Col, Container, Form, Modal, Row} from "react-bootstrap";
 import {withRouter} from 'react-router'
 import {Link} from 'react-router-dom';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome/index";

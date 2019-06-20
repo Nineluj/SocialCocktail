@@ -2,7 +2,7 @@ import React from 'react'
 import UserService from '../../services/UserService';
 import {Link} from 'react-router-dom'
 import UserListPanel from './UserListPanel';
-import { Row, Col, Button, Container } from 'react-bootstrap';
+import {Button, Col, Row} from 'react-bootstrap';
 import UserLikesPanel from './UserLikesPanel';
 import CommentsPanel from '../CommentsPanel';
 import CommentService from '../../services/CommentService';

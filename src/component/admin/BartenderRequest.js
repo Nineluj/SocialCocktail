@@ -1,6 +1,6 @@
 import React from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Row, Col, ListGroup} from "react-bootstrap";
+import {Col, ListGroup, Row} from "react-bootstrap";
 
 const BartenderRequest = ({username, barName, supervisorName, supervisorPhone, id, verifyBartender}) => (
     <ListGroup.Item>

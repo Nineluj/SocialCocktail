@@ -1,9 +1,6 @@
 import React from 'react'
-import UserService from '../../services/UserService'
-import {Redirect, withRouter} from 'react-router'
-import {Link} from "react-router-dom";
-import {Alert, Col, Container, Row} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Redirect} from 'react-router'
+import {Container} from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 import BartenderRequest from "./BartenderRequest";
 import AdminService from "../../services/AdminService";
