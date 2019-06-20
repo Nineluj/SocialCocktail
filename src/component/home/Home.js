@@ -35,14 +35,16 @@ class Home extends React.Component {
 
     // Needed for logged in homepage to populate on instantiation and refresh
     componentDidMount() {
-        this.commentService.getFollowingComments(3)
-        .then(comments => this.setState({
-            followingComments: comments
-        }))
-        this.commentService.getComments(3)
-        .then(comments => this.setState({
-            yourComments: comments
-        })) 
+        if (this.props.user.id !== undefined) {
+            this.commentService.getFollowingComments(3)
+                .then(comments => this.setState({
+                    followingComments: comments
+                }))
+            this.commentService.getComments(3)
+                .then(comments => this.setState({
+                    yourComments: comments
+                }))
+        }
     }
 
     render() {

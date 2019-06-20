@@ -53,7 +53,6 @@ class Register extends React.Component {
         this.setState({
             supervisorPhone: event.target.value
         })
-        console.log(this.state)
     };
 
     onRegister = () => {

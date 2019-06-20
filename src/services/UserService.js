@@ -29,7 +29,6 @@ export default class UserService {
 
     authenticateUser = (user) => {
         user.password = sha256(user.password).toString()
-        console.log('@@@', this.authenticateUserUrl)
         return fetch(this.authenticateUserUrl, {
             method: 'POST',
             body: JSON.stringify(user),

@@ -134,8 +134,6 @@ class Profile extends React.Component {
     }
 
     render() {
-        console.log('///', this.state.user);
-
         if (this.state.userId !== undefined && 
             this.props.id !== undefined &&
             this.state.userId !== this.props.id) {
