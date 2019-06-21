@@ -17,20 +17,20 @@ class Home extends React.Component {
     };
     if (this.props.user.id === undefined) {
       this.commentService.getRecentComments(3).then((comments) =>
-        this.setState({
-          recentComments: comments,
-        })
+          this.setState({
+            recentComments: comments,
+          })
       );
     } else {
       this.commentService.getFollowingComments(3).then((comments) =>
-        this.setState({
-          followingComments: comments,
-        })
+          this.setState({
+            followingComments: comments,
+          })
       );
       this.commentService.getComments(3).then((comments) =>
-        this.setState({
-          yourComments: comments,
-        })
+          this.setState({
+            yourComments: comments,
+          })
       );
     }
   }
@@ -39,14 +39,14 @@ class Home extends React.Component {
   componentDidMount() {
     if (this.props.user.id !== undefined) {
       this.commentService.getFollowingComments(3).then((comments) =>
-        this.setState({
-          followingComments: comments,
-        })
+          this.setState({
+            followingComments: comments,
+          })
       );
       this.commentService.getComments(3).then((comments) =>
-        this.setState({
-          yourComments: comments,
-        })
+          this.setState({
+            yourComments: comments,
+          })
       );
     }
   }
@@ -66,38 +66,40 @@ class Home extends React.Component {
 
   render() {
     return (
-      <Container fluid className="dark-background full-height">
-        <div className="home-main-div">
-          <Row>
+        <Container fluid className="dark-background full-height">
+          <div className="home-main-div">
             <HomeWelcomePanel username={this.props.user.username} />
-              {/*// Below, for any comments panel, make the API call to get the*/}
-              {/*// desired comments, and return a <CommentsPanel/> during the*/}
-              {/*// .then after the promise.*/}
+            {/*// Below, for any comments panel, make the API call to get the*/}
+            {/*// desired comments, and return a <CommentsPanel/> during the*/}
+            {/*// .then after the promise.*/}
             {this.props.user.id === undefined && (
-              <CommentsPanel
-                title="Recent Comments on our Platform"
-                comments={this.state.recentComments}
-              />
+                <Row className="container light-background info-panel">
+                  <Col xs={12} md={6}>
+                    <CommentsPanel
+                        title="Recent Comments on our Platform"
+                        comments={this.state.recentComments}
+                    />
+                  </Col>
+                </Row>
             )}
             {this.props.user.id !== undefined && (
-              <Row className="container light-background info-panel">
-                <Col xs={12} md={6}>
-                  <CommentsPanel
-                    title="Your Friends's Activity"
-                    comments={this.state.followingComments}
-                  />
-                </Col>
-                <Col xs={12} md={6}>
-                  <CommentsPanel
-                    title="Your Recent Activity"
-                    comments={this.state.yourComments}
-                  />
-                </Col>
-              </Row>
+                <Row className="container light-background info-panel">
+                  <Col xs={12} md={6}>
+                    <CommentsPanel
+                        title="Your Friends's Activity"
+                        comments={this.state.followingComments}
+                    />
+                  </Col>
+                  <Col xs={12} md={6}>
+                    <CommentsPanel
+                        title="Your Recent Activity"
+                        comments={this.state.yourComments}
+                    />
+                  </Col>
+                </Row>
             )}
-          </Row>
-        </div>
-      </Container>
+          </div>
+        </Container>
     );
   }
 }
