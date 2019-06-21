@@ -7,8 +7,6 @@ import UserLikesPanel from './UserLikesPanel';
 import CommentsPanel from '../CommentsPanel';
 import CommentService from '../../services/CommentService';
 import './Profile.scss';
-import { Redirect } from 'react-router-dom'
-
 
 class Profile extends React.Component {
     constructor(props) {
@@ -26,8 +24,7 @@ class Profile extends React.Component {
                 following: [],
                 firstFiveComments: [],
                 firstFiveCocktails: [],
-                loggedInFollowing: [],
-                redirectHome: false
+                loggedInFollowing: []
             }
             this.retrieveAllPublicUserData()
             this.getLoggedInFollowing()
@@ -42,8 +39,8 @@ class Profile extends React.Component {
                 firstFiveComments: [],
                 firstFiveCocktails: [],
                 loggedInFollowing: [],
-                redirectHome: false
             };
+
             this.retrieveAllPrivateUserData()
         } else {
             this.state = {
@@ -55,7 +52,6 @@ class Profile extends React.Component {
                 firstFiveComments: [],
                 firstFiveCocktails: [],
                 loggedInFollowing: [],
-                redirectHome: false
             }
         }
     }
@@ -83,37 +79,29 @@ class Profile extends React.Component {
     retrieveAllPublicUserData = () => {
         this.userService.findUserById(this.props.id)
         .then(user => {
-            if (user !== undefined) {
-                this.setState({
-                    user: user
-                })
-                return user;
-            }
             this.setState({
-                redirectHome: true
-            })
-            return Promise.reject('Undefined User')
-        }).then(res => 
+            user: user
+        })})
 
         this.userService.getFollowersById(this.props.id)
         .then(followers => this.setState({
             followers: followers
-        }))).then(res =>
+        }))
 
         this.userService.getFollowingById(this.props.id)
         .then(following => this.setState({
             following: following
-        }))).then(res =>
+        }))
 
         this.commentService.getCommentsByUserId(this.props.id, 5)
         .then(comments => this.setState({
             firstFiveComments: comments
-        }))).then(res => 
+        }))
 
         this.userService.getLikedCocktails(this.props.id, 5)
         .then(cocktails => this.setState({
             firstFiveCocktails: cocktails
-        })))
+        }))
     }
 
     retrieveAllPrivateUserData = () => {
@@ -146,10 +134,6 @@ class Profile extends React.Component {
     }
 
     render() {
-        if (this.state.redirectHome) {
-            alert('This user does not exist')
-            return <Redirect to='/'></Redirect>
-        }
         if (this.state.userId !== undefined && 
             this.props.id !== undefined &&
             this.state.userId !== this.props.id) {

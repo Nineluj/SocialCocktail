@@ -97,12 +97,7 @@ export default class UserService {
         return fetch(this.findUserByIdUrl.replace('USER_ID', id), {
             method: 'GET',
             credentials: 'include'
-        }).then(response => {
-            if (response.status === 200) {
-                return response.json()
-            }
-            return undefined
-        })
+        }).then(response => response.json())
     }
 
     getFollowers = () => {
