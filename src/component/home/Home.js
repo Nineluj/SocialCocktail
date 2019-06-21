@@ -51,6 +51,19 @@ class Home extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.user.id !== prevProps.user.id) {
+      this.commentService.getFollowingComments(3)
+          .then(comments => this.setState({
+            followingComments: comments
+          }))
+      this.commentService.getComments(3)
+          .then(comments => this.setState({
+            yourComments: comments
+          }))
+    }
+  }
+
   render() {
     return (
       <Container fluid className="dark-background full-height">

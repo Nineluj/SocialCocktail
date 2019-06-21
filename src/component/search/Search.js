@@ -18,6 +18,7 @@ class Search extends React.Component {
         shownCocktails: [],
         rerouteActive: false,
         isComponentMounted: true,
+        hasSearched: false
       };
       this.searchCocktail();
     } else {
@@ -25,6 +26,7 @@ class Search extends React.Component {
         cocktailSearchText: '',
         shownCocktails: [],
         rerouteActive: false,
+        hasSearched: false
       };
     }
   }
@@ -40,6 +42,7 @@ class Search extends React.Component {
   updateResults = (results) => {
     this.setState({
       shownCocktails: results.drinks,
+      hasSearched: true
     });
   };
 
@@ -55,7 +58,7 @@ class Search extends React.Component {
     if (this.state.rerouteActive) {
       return <Redirect to={`/search/${this.state.cocktailSearchText}`} />;
     }
-    let { cocktailSearchText, shownCocktails } = this.state;
+    let { cocktailSearchText, shownCocktails, hasSearched } = this.state;
 
     return (
         <div className="dark-background full-height demo">
@@ -86,7 +89,7 @@ class Search extends React.Component {
                     </Col>
                     <Col xs={3}>
                       <Link
-                          to={`/search/${this.state.cocktailSearchText}`}
+                          to={`/search/${cocktailSearchText}`}
                           onClick={this.searchCocktail}
                       >
                         <button className="btn btn-success" type="button">
@@ -107,10 +110,13 @@ class Search extends React.Component {
                   ))}
               </Col>
               }
-              {(shownCocktails === null || shownCocktails.length === 0) &&
+              {(shownCocktails === null || shownCocktails.length === 0) && hasSearched &&
               <Col xs={12} className="mt-2">
                 <h5>Womp Womp. No matches found.</h5>
               </Col>
+              }
+              {(shownCocktails === null || shownCocktails.length === 0) && !hasSearched &&
+                <h5>Enter a query to explore our world of cocktails!</h5>
               }
             </Row>
           </div>
