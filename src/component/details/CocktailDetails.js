@@ -283,9 +283,12 @@ class CocktailDetails extends React.Component {
               onClick={() => this.setGlassInfoModalVisibility(true)}
             >
               <FontAwesomeIcon className="mr-2" icon="info-circle" />
-              {drink.strCategory}
+              {drink.strGlass}
             </h3>
             <h5>
+              <h5 className="mt-2 mb-2">
+                Type: {drink.strCategory}<br/>
+              </h5>
               Ingredients:
               <ul>
                 {this.state.ingredients.map((ingr, index) => (
