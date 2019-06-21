@@ -29,12 +29,10 @@ class Profile extends React.Component {
                 loggedInFollowing: [],
                 redirectHome: false
             }
-            console.log('here')
             this.retrieveAllPublicUserData()
             this.getLoggedInFollowing()
         }
         else if (this.props.user.id !== undefined) {
-            console.log('shouldnt get here')
             this.state = {
                 isPublic: false,
                 user: this.props.user,
@@ -183,7 +181,6 @@ class Profile extends React.Component {
                                     readOnly
                                     value={this.state.user.username}/>
                             </div>
-                            {console.log(this.state.user)}
                         </div>
 
                         <div className="form-group row">
