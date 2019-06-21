@@ -67,7 +67,7 @@ class Home extends React.Component {
   render() {
     return (
         <Container fluid className="dark-background full-height">
-          <div className="home-main-div">
+          <div className="home-main-div row">
             <HomeWelcomePanel username={this.props.user.username} />
             {/*// Below, for any comments panel, make the API call to get the*/}
             {/*// desired comments, and return a <CommentsPanel/> during the*/}
