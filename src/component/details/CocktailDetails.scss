@@ -43,8 +43,10 @@
 }
 
 .cocktail-info-scrollable {
-  height: 400px;
-  overflow-y: scroll;
+  @media (min-width: 768px) {
+    height: 400px;
+    overflow-y: scroll;
+  }
   border-radius: 10px;
   padding-top: 10px;
   flex: 1;
