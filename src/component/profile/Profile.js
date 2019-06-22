@@ -278,28 +278,27 @@ class Profile extends React.Component {
                                         }}>
                                     Update
                                 </button>
-                                <button className="btn btn-danger btn-block">Logout</button>
                             </div>
                         </div>
                     </form>
                     <Row>
-                        <Col xs={6}>
+                        <Col xs={12} md={6}>
                             <CommentsPanel title='Recent Comments by this User'
                                            comments={this.state.firstFiveComments}/>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={12} md={6}>
                             <UserLikesPanel title='Recently liked Cocktails'
                                             cocktails={this.state.firstFiveCocktails}/>
                         </Col>
                         
-                        <Col xs={6}>
+                        <Col xs={12} md={6}>
                             <UserListPanel title='Following' 
                                            users={this.state.following} 
                                            following={this.state.loggedInFollowing}
                                            loggedInId={this.props.user.id}
                                            getLoggedInFollowing={this.getLoggedInFollowing}/>
                         </Col>
-                        <Col xs={6}>
+                        <Col xs={12} md={6}>
                             <UserListPanel title='Followers' 
                                            users={this.state.followers} 
                                            following={this.state.loggedInFollowing}
