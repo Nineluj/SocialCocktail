@@ -1,13 +1,20 @@
 import React from 'react';
 import Card from 'react-bootstrap/Card';
+import { Button } from 'react-bootstrap';
+import CommentService from '../services/CommentService';
+
+let commentService = CommentService.getInstance();
 
 const Comment = ({
   title,
   date,
+  id,
   content,
   author,
   cocktail,
   hideCocktailLink,
+  isPrivateProfile,
+  getRecentComments
 }) => (
   <Card className="mx-auto comment">
     <div className="comment-info">
@@ -28,6 +35,17 @@ const Comment = ({
       <div className="comment-title">{title}</div>
       <div className="comment-body">{content}</div>
     </div>
+    {isPrivateProfile &&
+        <Button variant={'danger'}
+                onClick={() => {
+                    commentService.deleteCommentById(id)
+                    .then(response => {
+                        if (response.status === 200) {
+                            getRecentComments()
+                        }
+                    })
+                }}>Delete</Button>
+    }
   </Card>
 );
 

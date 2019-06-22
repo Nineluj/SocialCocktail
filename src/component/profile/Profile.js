@@ -147,6 +147,13 @@ class Profile extends React.Component {
         }
     }
 
+    getRecentComments = () => {
+        this.commentService.getCommentsByUserId(this.props.user.id, 5)
+        .then(comments => this.setState({
+            firstFiveComments: comments
+        }))
+    }
+
     render() {
         if (this.state.redirectHome) {
             alert('This user does not exist')
@@ -284,7 +291,9 @@ class Profile extends React.Component {
                     <Row>
                         <Col xs={12} md={6}>
                             <CommentsPanel title='Recent Comments by this User'
-                                           comments={this.state.firstFiveComments}/>
+                                           comments={this.state.firstFiveComments}
+                                           isPrivateProfile={true}
+                                           getRecentComments={this.getRecentComments}/>
                         </Col>
                         <Col xs={12} md={6}>
                             <UserLikesPanel title='Recently liked Cocktails'

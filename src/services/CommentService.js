@@ -19,5 +19,7 @@ export default class CommentService extends BaseService {
 
     createComment = (comment, cocktailId) => this.createItem(`/cocktail/${cocktailId}/comments`, comment);
 
-    findCommentsByCocktailId = (cocktailId) => this.findById(`/cocktail/${cocktailId}/comments`)
+    findCommentsByCocktailId = (cocktailId) => this.findById(`/cocktail/${cocktailId}/comments`);
+
+    deleteCommentById = (commentId) => this.deleteItem(`/comments/${commentId}`);
 }

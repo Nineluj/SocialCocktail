@@ -14,7 +14,10 @@ const CommentsPanel = (props) => (
             author={comment.author}
             cocktail={comment.cocktail}
             key={comment.id}
+            id={comment.id}
             hideCocktailLink={props.hideCocktailLink}
+            isPrivateProfile={props.isPrivateProfile}
+            getRecentComments={props.getRecentComments}
           />
         ))}
     </div>
